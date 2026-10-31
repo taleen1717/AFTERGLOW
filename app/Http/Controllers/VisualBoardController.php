@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\VisualBoard;
+use App\Services\VisualBoardImageStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -40,66 +40,70 @@ class VisualBoardController extends Controller
         ]);
     }
 
-    public function image(VisualBoard $visualBoard): StreamedResponse
+    public function image(VisualBoard $visualBoard, VisualBoardImageStorage $images): StreamedResponse|RedirectResponse
     {
-        abort_unless(Storage::disk('public')->exists($visualBoard->image_path), 404);
-
-        // Public gallery images are served via a Laravel route, so Windows users
-        // do not need to create a public/storage symbolic link.
-        return Storage::disk('public')->response(
-            $visualBoard->image_path,
-            null,
-            ['Cache-Control' => 'public, max-age=3600', 'X-Content-Type-Options' => 'nosniff']
-        );
+        // Local images continue to work during development; hosted images redirect
+        // to Cloudinary's CDN and remain available after Render restarts.
+        return $images->respond($visualBoard->image_path);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, VisualBoardImageStorage $images): RedirectResponse
     {
-
-
         $data = $request->validate($this->rules(true));
 
-        $imagePath = $request->file('image')->store('visual-boards', 'public');
-        abort_if($imagePath === false, 500, 'Unable to store your image.');
+        $imagePath = $images->store($request->file('image'));
 
-        VisualBoard::create([
-            'user_id' => Auth::id(),
-            'title' => $data['title'],
-            'description' => $data['description'] ?? null,
-            'mood' => $data['mood'],
-            'image_path' => $imagePath,
-        ]);
+        try {
+            VisualBoard::create([
+                'user_id' => Auth::id(),
+                'title' => $data['title'],
+                'description' => $data['description'] ?? null,
+                'mood' => $data['mood'],
+                'image_path' => $imagePath,
+            ]);
+        } catch (\Throwable $e) {
+            // Avoid leaving a cloud image behind if saving the database row fails.
+            $images->delete($imagePath);
+            throw $e;
+        }
 
         return redirect()->route('boards.index')->with('board_success', 'Your artwork is now on Visual Boards!');
     }
 
-    public function update(Request $request, VisualBoard $visualBoard): RedirectResponse
+    public function update(Request $request, VisualBoard $visualBoard, VisualBoardImageStorage $images): RedirectResponse
     {
         $this->checkOwner($visualBoard);
         $data = $request->validate($this->rules(false));
         $previousImage = $visualBoard->image_path;
 
         if ($request->hasFile('image')) {
-            $nextImage = $request->file('image')->store('visual-boards', 'public');
-            abort_if($nextImage === false, 500, 'Unable to store your replacement image.');
+            $nextImage = $images->store($request->file('image'));
             $data['image_path'] = $nextImage;
         }
         unset($data['image']);
 
-        $visualBoard->update($data);
+        try {
+            $visualBoard->update($data);
+        } catch (\Throwable $e) {
+            if (isset($nextImage)) {
+                $images->delete($nextImage);
+            }
+            throw $e;
+        }
+
         if (isset($nextImage)) {
-            Storage::disk('public')->delete($previousImage);
+            $images->delete($previousImage);
         }
 
         return redirect()->route('boards.index')->with('board_success', 'Artwork updated successfully.');
     }
 
-    public function destroy(VisualBoard $visualBoard): RedirectResponse
+    public function destroy(VisualBoard $visualBoard, VisualBoardImageStorage $images): RedirectResponse
     {
         $this->checkOwner($visualBoard);
         $imagePath = $visualBoard->image_path;
         $visualBoard->delete();
-        Storage::disk('public')->delete($imagePath);
+        $images->delete($imagePath);
 
         return redirect()->route('boards.index')->with('board_success', 'Artwork removed from your gallery.');
     }
