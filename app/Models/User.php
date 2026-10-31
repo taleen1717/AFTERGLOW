@@ -29,4 +29,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function quotes() {
+        return $this->hasMany(Quote::class);
+    }
+    public function favoriteSongs(): \Illuminate\Database\Eloquent\Relations\HasMany
+{
+    return $this->hasMany(\App\Models\FavoriteSong::class);
+}
 }

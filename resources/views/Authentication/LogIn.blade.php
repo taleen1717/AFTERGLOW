@@ -1,19 +1,26 @@
 @extends('Layout.AuthImg')
-@extends('Layout.app')
+
 
 @section('title', 'Log In')
-@section('content')
+
 @section('form')
 
     <div class="flex items-center justify-center p-8">
-        <form action="{{ url('/') }}" method="GET" class="mx-auto mt-5 w-full max-w-xl rounded-lg p-9">
+        <form method="post" class="mx-auto mt-5 w-full max-w-xl rounded-lg p-9">
             @csrf
+
+@if ($errors->any())
+    <div class="mb-4 rounded-lg bg-red-100 p-4 text-red-800">
+        {{ $errors->first() }}
+    </div>
+@endif
+
 
             <h2 class="mb-2 text-center text-2xl font-bold text-white">Log In</h2>
 
             <div class="mb-4">
                 <label for="email" class="label">Email</label>
-                <input id="email" type="email" class="input peer user-invalid:border-red-500" required
+                <input id="email" name="email" type="email" class="input peer user-invalid:border-red-500" required
                     pattern="[^@\s]+@[^@\s]+\.[A-Za-z]{2,}">
                 <p class="mt-1 text-xs text-white peer-user-invalid:text-red-600">
                     A valid email, e.g. name@example.com
@@ -23,7 +30,7 @@
 
             <div class="mb-4">
                 <label for="password" class="label">Password</label>
-                <input id="password" type="password" class="input peer user-invalid:border-red-500" required
+                <input id="password" name="password" type="password" class="input peer user-invalid:border-red-500" required
                     minlength="8">
                 <p class="mt-1 text-xs text-white peer-user-invalid:text-red-600">
                     At least 8 characters.
@@ -34,7 +41,4 @@
         </form>
     </div>
 
-
 @endsection
-@endsection
-

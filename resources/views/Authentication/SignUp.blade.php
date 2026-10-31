@@ -1,15 +1,47 @@
 @extends('Layout.AuthImg')
-@extends('Layout.app')
+
 
 @section('title', 'Sign Up')
-@section('content')
+
 
 @section('form')
 
         <div class=" items-center justify-center p-8">
-            <form action="{{ url('/') }}" method="GET" class="mx-auto  mt-5 max-w-xl rounded-lg  p-9 ">
+            <form method="post" class="mx-auto  mt-5 max-w-xl rounded-lg  p-9 ">
                 @csrf
+
+
+
+
+
                 <h2 class="mb-4 text-2xl font-bold  text-center text-white">Sign Up</h2>
+
+@if ($errors->any())
+    <div role="alert"
+         style="
+            background: linear-gradient(135deg, #fff0f6, #ffe4ee);
+            border: 1px solid #ff8fba;
+            border-left: 4px solid #f04491;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            color: #80234f;
+            box-shadow: 0 8px 24px rgba(240, 68, 145, 0.12);
+         ">
+
+        <p style="font-size: 15px; font-weight: 700; margin-bottom: 8px;">
+            ✦ Oops! Something went wrong.
+        </p>
+
+        @foreach ($errors->all() as $error)
+            <p style="font-size: 14px; margin: 0; line-height: 1.7;">
+                {{ $error }}
+            </p>
+        @endforeach
+
+    </div>
+@endif
+
                 <div class="mb-4">
                     <label for="name" class="label">Name</label>
                     <input id="name" name="name" type="text" class="input peer user-invalid:border-red-500"
@@ -21,7 +53,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="email" class="label">Email</label>
-                    <input id="email" type="email" class="input peer user-invalid:border-red-500" required
+                    <input id="email" name="email" type="email" class="input peer user-invalid:border-red-500" required
                         pattern="[^@\s]+@[^@\s]+\.[A-Za-z]{2,}">
                     <p class="mt-1 text-xs text-white peer-user-invalid:text-red-600">
                         A valid email, e.g. name@example.com
@@ -30,7 +62,7 @@
 
                 <div class="mb-4">
                     <label for="password" class="label">Password</label>
-                    <input id="password" type="password" class="input peer user-invalid:border-red-500" required
+                    <input id="password" name="password" type="password" class="input peer user-invalid:border-red-500" required
                         minlength="8">
                     <p class="mt-1 text-xs text-white peer-user-invalid:text-red-600">
                         At least 8 characters.
@@ -46,5 +78,3 @@
         </div>
         
 @endsection
-@endsection
-
