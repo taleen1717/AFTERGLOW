@@ -1,0 +1,15 @@
+/* AFTERGLOW / playback fallback — adapts to Cyber Night and Icy Ethereal */
+.ag-playback-tools{display:flex;align-items:center;margin:12px 0 0}
+.ag-player-help-toggle{background:transparent;color:var(--ag-secondary);border:1px solid var(--ag-border);border-radius:999px;padding:8px 13px;cursor:pointer;font-size:12px;font-weight:750}
+.ag-player-help-toggle:hover{background:var(--ag-surface)}
+.ag-player-fallback{border:1px solid var(--ag-border);background:var(--ag-surface);border-radius:15px;padding:15px;margin-top:11px;color:var(--ag-ink);box-shadow:0 0 16px var(--ag-glow)}
+.ag-player-fallback[hidden]{display:none!important}
+.ag-fallback-title{font-size:14px;font-weight:800;line-height:1.5;color:var(--ag-ink)}
+.ag-fallback-info,.ag-fallback-note{font-size:12px;line-height:1.6;margin:8px 0;color:var(--ag-muted)}
+.ag-fallback-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:12px}
+.ag-fallback-actions button,.ag-fallback-actions a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;border-radius:999px;border:1px solid var(--ag-border);background:var(--ag-bg);color:var(--ag-ink);font-size:12px;font-weight:700;padding:9px 12px;line-height:1.4}
+.ag-fallback-actions .ag-try-alternative{background:var(--ag-primary);color:var(--ag-primary-ink);border-color:transparent}
+.ag-playback-failed .ag-vp-record{animation-play-state:paused}
+.ag-vp-youtube .ag-vp-record{animation-play-state:paused}
+.ag-vp-details.ag-vp-playing:not(.ag-playback-failed) .ag-vp-record{animation-play-state:running}
+@media (prefers-reduced-motion:reduce){.ag-vp-details.ag-vp-playing .ag-vp-record{animation:none!important}}

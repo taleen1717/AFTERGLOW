@@ -1,0 +1,870 @@
+/* AFTERGLOW — Animated Auth Experience for /signup and /login ONLY.
+   Load AFTER afterglow-worlds-final.css. No controller/routes changes. */
+main.ag-auth-main {
+  position:relative;
+  isolation:isolate;
+  min-height:max(690px,calc(100svh - 95px));
+  overflow:hidden;
+  background-color:#090d28;
+}
+html[data-world="icy"] main.ag-auth-main{background-color:#e0f2ff;}
+main.ag-auth-main .ag-auth-photo-motion {
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  inset:-5%;
+  background: var(--ag-hero-image) center/cover no-repeat;
+  animation:agAuthCinematic 30s ease-in-out infinite alternate;
+  transform:scale(1.065) translate3d(0,0,0);
+  will-change:transform;
+}
+@keyframes agAuthCinematic {
+  from{transform:scale(1.065) translate3d(-1%,.5%,0)}
+  to{transform:scale(1.155) translate3d(1%,-.9%,0)}
+}
+main.ag-auth-main::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 82% 30%,rgba(204,41,230,.10),transparent 48%),
+    linear-gradient(90deg,rgba(5,8,28,.84),rgba(5,8,29,.60) 47%,rgba(8,9,34,.32));
+}
+html[data-world="icy"] main.ag-auth-main::after {
+  background:
+    radial-gradient(ellipse at 80% 65%,rgba(100,178,221,.16),transparent 55%),
+    linear-gradient(90deg,rgba(234,247,255,.92),rgba(233,245,253,.70) 48%,rgba(236,249,255,.26));
+}
+/* Find the existing two-column authentication grid without replacing its form. */
+main.ag-auth-main .ag-auth-two-col {
+  position:relative;
+  z-index:2;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,.94fr) !important;
+  align-items:center;
+  gap:clamp(22px,4vw,78px);
+  max-width:1480px;
+  min-height:max(690px,calc(100svh - 95px));
+  margin:auto;
+  padding:clamp(24px,4vw,70px) clamp(20px,5vw,82px) !important;
+}
+main.ag-auth-main .ag-auth-form-side {
+  min-width:0;
+  display:block !important;
+  background:linear-gradient(135deg,rgba(10,12,40,.76),rgba(13,18,53,.62));
+  border:1px solid rgba(176,160,249,.27);
+  -webkit-backdrop-filter:blur(13px);backdrop-filter:blur(13px);
+  border-radius:29px;
+  box-shadow:0 20px 55px rgba(0,0,0,.23);
+  padding:clamp(8px,1.2vw,22px) !important;
+}
+main.ag-auth-main .ag-auth-form-side form {
+  max-width:100% !important;
+  margin:0 auto !important;
+  padding:clamp(16px,2vw,30px) !important;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-form-side {
+  background:linear-gradient(135deg,rgba(251,254,255,.85),rgba(224,242,252,.72));
+  border-color:rgba(164,185,207,.68);
+  box-shadow:0 20px 50px rgba(78,130,171,.15),inset 0 1px rgba(255,255,255,.9);
+}
+main.ag-auth-main .ag-auth-form-side h2{color:var(--ag-ink)!important;}
+main.ag-auth-main .ag-auth-form-side p.text-white,
+main.ag-auth-main .ag-auth-form-side .label {color:var(--ag-ink)!important;}
+main.ag-auth-main .ag-auth-form-side a{color:var(--ag-secondary)!important;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-form-side a{color:#1d70b8!important;}
+main.ag-auth-main .ag-auth-story-side {
+  display:block !important;
+  min-width:0;
+  color:#f5f3ff;
+  padding:20px 0;
+}
+main.ag-auth-main .ag-auth-story-kicker {
+  color:#9ae3ff;
+  font:800 12px/1.5 system-ui,sans-serif;
+  letter-spacing:.23em;
+  text-transform:uppercase;
+}
+main.ag-auth-main .ag-auth-story-title {
+  margin:14px 0 18px;
+  font:500 clamp(2.6rem,5vw,5rem)/1.03 Georgia,serif;
+  letter-spacing:-.035em;
+  color:inherit;
+  text-shadow:0 0 23px rgba(205,80,247,.18);
+}
+main.ag-auth-main .ag-auth-story-lead {
+  margin:0 0 30px;
+  max-width:490px;
+  font:400 clamp(15px,1.2vw,18px)/1.75 system-ui,sans-serif;
+  color:#dde2ff;
+}
+main.ag-auth-main .ag-auth-story-list {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px 22px;padding:0;margin:0;list-style:none;}
+main.ag-auth-main .ag-auth-story-list li {
+  padding-top:13px;
+  border-top:1px solid rgba(214,206,255,.3);
+  min-width:0;
+}
+main.ag-auth-main .ag-auth-story-list strong {display:block;font:700 14px/1.5 system-ui,sans-serif;color:inherit;}
+main.ag-auth-main .ag-auth-story-list span {display:block;font:400 12px/1.6 system-ui,sans-serif;color:#c7cdea;margin-top:3px;}
+main.ag-auth-main .ag-auth-story-end {margin-top:30px;font:700 12px system-ui,sans-serif;letter-spacing:.15em;color:#c6bbff;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-side {color:#17416d;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-kicker {color:#2978bc;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-title {text-shadow:none;background:linear-gradient(120deg,#1c5088,#398ec8,#aabfcf,#31699a);background-clip:text;-webkit-background-clip:text;color:transparent;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-lead {color:#395f80;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-list li {border-color:rgba(69,129,170,.29);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-list span {color:#52758d;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-end {color:#4387bb;}
+@media(max-width:930px) {
+  main.ag-auth-main .ag-auth-two-col {grid-template-columns:1fr !important;gap:25px;padding:35px 22px 55px!important;}
+  main.ag-auth-main .ag-auth-form-side {max-width:660px;width:100%;margin:auto;}
+  main.ag-auth-main .ag-auth-story-side {max-width:660px;width:100%;margin:auto;padding:8px 15px 15px;}
+  main.ag-auth-main .ag-auth-story-title {font-size:clamp(2.2rem,6vw,3.8rem);}
+}
+@media(max-width:500px){
+  main.ag-auth-main .ag-auth-two-col {padding:25px 12px 40px!important;}
+  main.ag-auth-main .ag-auth-form-side {border-radius:20px;padding:5px!important;}
+  main.ag-auth-main .ag-auth-form-side form {padding:14px!important;}
+  main.ag-auth-main .ag-auth-story-list {gap:10px;}
+  main.ag-auth-main .ag-auth-story-list strong {font-size:12px;}
+  main.ag-auth-main .ag-auth-story-list span {font-size:11px;}
+}
+@media(prefers-reduced-motion: reduce){main.ag-auth-main .ag-auth-photo-motion{animation:none!important;will-change:auto;}}
+
+/* -------------------------------------------------------------
+   AFTERGLOW Auth Worlds v2 · Icon-rich animated service showcase
+   Enhances the same CSS/JS files already installed by the user.
+   Does not alter validation, form fields, routes, or navbar.
+   ------------------------------------------------------------- */
+main.ag-auth-main .ag-auth-story-v2 {
+  --ag-feature-bg:rgba(16,16,52,.50);
+  --ag-feature-border:rgba(211,168,255,.23);
+  --ag-feature-ink:#fff8ff;
+  --ag-feature-sub:#c5c8ef;
+  position:relative;
+  isolation:isolate;
+  padding:clamp(12px,2.2vw,26px) 0;
+  animation:agAuthRise .65s ease-out both;
+}
+main.ag-auth-main .ag-auth-story-v2::before {
+  content:"";
+  position:absolute;
+  inset:5% -6% 5% -5%;
+  pointer-events:none;
+  border-radius:38px;
+  z-index:-1;
+  background:radial-gradient(ellipse at 60% 10%,rgba(218,104,255,.14),transparent 50%);
+}
+main.ag-auth-main .ag-auth-kicker-row {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+main.ag-auth-main .ag-auth-signal {display:inline-flex;align-items:center;gap:7px;color:#c4ddf7;font:700 9px/1.2 system-ui,sans-serif;letter-spacing:.13em;white-space:nowrap;}
+main.ag-auth-main .ag-auth-signal-dot{display:inline-block;flex:none;height:6px;width:6px;border-radius:50%;background:#78e6ff;box-shadow:0 0 10px #7be6ff;animation:agAuthBlink 2.5s ease-in-out infinite;}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-story-title{
+  margin:14px 0 13px;
+  font-size:clamp(2.45rem,4.25vw,4.4rem);
+  line-height:1.03;
+  letter-spacing:-.037em;
+  text-wrap:balance;
+}
+main.ag-auth-main .ag-auth-gradient-word{
+  background:linear-gradient(110deg,#ffffff 5%,#f4c8ff 38%,#bd85ff 75%,#f1d9ff 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 10px rgba(212,92,255,.18));
+}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-story-lead {font-size:clamp(13px,1.15vw,16px);line-height:1.65;margin:0 0 13px;max-width:620px;color:#e1dafa;}
+main.ag-auth-main .ag-auth-promo-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 23px;}
+main.ag-auth-main .ag-auth-promo-chip{font:700 9px/1 system-ui,sans-serif;letter-spacing:.13em;padding:7px 10px;border-radius:999px;color:#e6dfff;background:rgba(174,126,245,.11);border:1px solid rgba(188,167,248,.24);}
+main.ag-auth-main .ag-auth-section-head{display:flex;align-items:center;gap:14px;margin:0 0 13px;color:#b9dbff;font:750 10px/1.5 system-ui,sans-serif;letter-spacing:.18em;}
+main.ag-auth-main .ag-auth-section-line{height:1px;flex:1;background:linear-gradient(90deg,rgba(168,204,255,.65),transparent);}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-story-list {grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card{
+  display:flex;align-items:center;gap:12px;min-width:0;position:relative;overflow:hidden;
+  padding:15px 13px;
+  border:1px solid var(--ag-feature-border);
+  background:var(--ag-feature-bg);
+  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
+  border-radius:17px;
+  box-shadow:0 7px 21px rgba(3,4,20,.14),inset 0 1px rgba(255,255,255,.05);
+  transition:transform .23s ease,border-color .23s ease,box-shadow .23s ease;
+}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card::before{
+  content:"";position:absolute;inset:auto -30% -50% 45%;height:100%;
+  background:radial-gradient(ellipse,rgba(194,103,255,.12),transparent 65%);
+  pointer-events:none;
+}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card:hover{transform:translateY(-3px);border-color:rgba(222,178,255,.58);box-shadow:0 10px 25px rgba(17,5,43,.28);}
+main.ag-auth-main .ag-auth-feature-icon{display:grid;place-items:center;flex:0 0 45px;height:45px;border-radius:14px;color:#eed0ff;background:linear-gradient(135deg,rgba(231,117,252,.26),rgba(101,135,255,.19));border:1px solid rgba(238,173,255,.27);box-shadow:inset 0 1px rgba(255,255,255,.12);}
+main.ag-auth-main .ag-auth-feature-icon svg{width:24px;height:24px;filter:drop-shadow(0 0 8px rgba(251,153,255,.23));}
+main.ag-auth-main .ag-auth-feature-music .ag-auth-feature-icon{color:#9cdaff;background:linear-gradient(145deg,rgba(78,161,245,.27),rgba(179,89,251,.22));}
+main.ag-auth-main .ag-auth-feature-art .ag-auth-feature-icon{color:#ffd5ee;background:linear-gradient(145deg,rgba(245,100,172,.26),rgba(139,113,239,.2));}
+main.ag-auth-main .ag-auth-feature-code .ag-auth-feature-icon{color:#9ce9ff;background:linear-gradient(145deg,rgba(40,190,232,.24),rgba(100,131,237,.2));}
+main.ag-auth-main .ag-auth-feature-glow .ag-auth-feature-icon{color:#ffe6ad;background:linear-gradient(145deg,rgba(252,189,96,.22),rgba(214,105,239,.18));}
+main.ag-auth-main .ag-auth-feature-copy {min-width:0;flex:1;position:relative;z-index:1;}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-copy strong {display:block;color:var(--ag-feature-ink);font:750 13px/1.36 system-ui,sans-serif;}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-copy span {display:block;color:var(--ag-feature-sub);font:400 11px/1.48 system-ui,sans-serif;margin-top:4px;}
+main.ag-auth-main .ag-auth-feature-tag{align-self:start;margin-left:auto;flex:none;font:700 8px/1 system-ui,sans-serif;letter-spacing:.11em;opacity:.65;color:#c9bcee;}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-wide{grid-column:span 2;}
+main.ag-auth-main .ag-auth-promo-footer{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:19px;color:#d4c6f8;font:800 10px/1.3 system-ui,sans-serif;letter-spacing:.15em;text-align:center;}
+main.ag-auth-main .ag-auth-footer-star{color:#fa93ff;text-shadow:0 0 10px rgba(238,128,252,.8);animation:agAuthTwinkle 4s ease-in-out infinite;}
+main.ag-auth-main .ag-auth-footer-star:last-child{animation-delay:1.4s;}
+main.ag-auth-main .ag-auth-sparkles{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;}
+main.ag-auth-main .ag-auth-sparkle{position:absolute;top:var(--y);left:var(--x);width:var(--size);height:var(--size);transform:rotate(45deg);background:rgba(190,225,255,.85);box-shadow:0 0 12px rgba(149,193,255,.8);animation:agAuthTwinkle 4.5s ease-in-out var(--delay) infinite;}
+main.ag-auth-main .ag-auth-sparkle::after{content:"";position:absolute;inset:-3px 2px;background:inherit;transform:rotate(90deg);}
+main.ag-auth-main .ag-auth-form-side{box-shadow:0 20px 55px rgba(0,0,0,.23),0 0 0 1px rgba(166,152,245,.07),inset 0 1px rgba(255,255,255,.08);}
+main.ag-auth-main .ag-auth-form-side h2::before{content:"✦";font:400 .6em/1 Georgia,serif;color:#d795ff;display:inline-block;vertical-align:.17em;margin-right:.45em;text-shadow:0 0 11px rgba(235,125,255,.6);}
+main.ag-auth-main .ag-auth-form-side input:focus-visible{outline:2px solid rgba(169,121,251,.76);outline-offset:2px;box-shadow:0 0 22px rgba(160,88,229,.19);}
+main.ag-auth-main .ag-auth-form-side .btn-primary{transition:transform .2s ease,box-shadow .2s ease;}
+main.ag-auth-main .ag-auth-form-side .btn-primary:hover{transform:translateY(-2px);box-shadow:0 9px 28px rgba(234,78,220,.23);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-v2{
+  --ag-feature-bg:rgba(250,253,255,.66);
+  --ag-feature-border:rgba(154,184,212,.55);
+  --ag-feature-ink:#17456f;
+  --ag-feature-sub:#436987;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-v2::before{background:radial-gradient(ellipse at 65% 10%,rgba(209,235,252,.45),transparent 60%);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-gradient-word{background:linear-gradient(105deg,#17609b,#79afdc 32%,#dce6ed 56%,#448dbb 83%,#1a5183);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 1px rgba(11,56,92,.2));}
+html[data-world="icy"] main.ag-auth-main .ag-auth-signal{color:#42789d;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-signal-dot{background:#4caede;box-shadow:0 0 8px #68c9e9;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-v2 .ag-auth-story-lead{color:#345c7d;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-promo-chip{color:#396f9d;background:rgba(238,250,255,.57);border-color:rgba(126,171,209,.54);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-section-head{color:#366e9c;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-section-line{background:linear-gradient(90deg,rgba(74,140,187,.52),transparent);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card{box-shadow:0 8px 20px rgba(69,125,170,.12),inset 0 1px rgba(255,255,255,.85);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card::before{background:radial-gradient(ellipse,rgba(184,216,241,.29),transparent 70%);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card:hover{border-color:rgba(56,136,200,.74);box-shadow:0 10px 25px rgba(74,136,170,.18);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-feature-icon{color:#327bad;background:linear-gradient(135deg,rgba(221,243,255,.99),rgba(186,217,244,.57));border-color:rgba(119,174,220,.48);box-shadow:inset 0 1px rgba(255,255,255,.94);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-feature-music .ag-auth-feature-icon{color:#26699c;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-feature-art .ag-auth-feature-icon{color:#7390b7;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-feature-code .ag-auth-feature-icon{color:#1a78b8;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-feature-glow .ag-auth-feature-icon{color:#7d95a9;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-feature-tag{color:#6485a0;opacity:.8;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-promo-footer{color:#3c739e;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-footer-star{color:#7da3be;text-shadow:0 0 10px rgba(242,251,255,.9);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-sparkle{background:#9dcce5;box-shadow:0 0 11px rgba(104,178,226,.5);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-form-side h2::before{color:#80aec9;text-shadow:0 0 8px rgba(255,255,255,.9);}
+html[data-world="icy"] main.ag-auth-main .ag-auth-form-side input:focus-visible{outline-color:#5aafdd;box-shadow:0 0 19px rgba(67,142,207,.17);}
+@keyframes agAuthRise{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
+@keyframes agAuthBlink{0%,100%{opacity:.6;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes agAuthTwinkle{0%,100%{opacity:.42;transform:scale(.8) rotate(45deg)}50%{opacity:1;transform:scale(1.12) rotate(45deg)}}
+@media(max-width:1230px){
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card{padding:12px 10px;gap:9px;}
+  main.ag-auth-main .ag-auth-feature-icon{flex-basis:40px;height:40px;}
+  main.ag-auth-main .ag-auth-feature-tag{display:none;}
+}
+@media(max-width:1060px){
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-story-list{grid-template-columns:1fr;gap:9px;}
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-wide{grid-column:auto;}
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card{padding:11px 12px;}
+}
+@media(max-width:930px){
+  main.ag-auth-main .ag-auth-story-v2{padding:10px;}
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-story-list{grid-template-columns:repeat(2,minmax(0,1fr));}
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-wide{grid-column:span 2;}
+}
+@media(max-width:500px){
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-story-title{font-size:clamp(2rem,9vw,3rem);}
+  main.ag-auth-main .ag-auth-kicker-row{align-items:start;flex-direction:column;}
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-story-list{grid-template-columns:1fr;}
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-wide{grid-column:auto;}
+  main.ag-auth-main .ag-auth-feature-tag{display:block;}
+  main.ag-auth-main .ag-auth-promo-footer{font-size:9px;letter-spacing:.1em;}
+}
+@media(prefers-reduced-motion:reduce){
+  main.ag-auth-main .ag-auth-story-v2,
+  main.ag-auth-main .ag-auth-signal-dot,
+  main.ag-auth-main .ag-auth-sparkle,
+  main.ag-auth-main .ag-auth-footer-star {animation:none!important;}
+  main.ag-auth-main .ag-auth-feature-card,
+  main.ag-auth-main .ag-auth-form-side .btn-primary{transition:none!important;}
+}
+
+
+/* ==============================================================
+   AFTERGLOW Auth v3 — Cyber Night Falling-Light Rain
+   These rules are scoped ONLY to /signup and /login via .ag-auth-main.
+   Dark uses the purple-stars file supplied by the user; icy keeps the
+   original --ag-hero-image and original Icy Ethereal photo unchanged.
+   ============================================================= */
+
+/* The source GIF contains one still frame. Animate real decorative
+   elements independently, keeping the exact supplied artwork visible. */
+html:not([data-world="icy"]) main.ag-auth-main {
+  background-color:#090419;
+}
+html:not([data-world="icy"]) main.ag-auth-main .ag-auth-photo-motion {
+  background-image:
+    linear-gradient(90deg,rgba(7,6,29,.10),rgba(10,5,30,.12)),
+    url('/afterglow/auth-purple-rain.gif');
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  animation:agAuthPurpleBackdrop 31s ease-in-out infinite alternate;
+}
+@keyframes agAuthPurpleBackdrop {
+  0% {transform:scale(1.07) translate3d(-.8%, .45%, 0);}
+  100% {transform:scale(1.18) translate3d(.7%, -.9%, 0);}
+}
+html:not([data-world="icy"]) main.ag-auth-main::after {
+  background:
+    radial-gradient(ellipse at 74% 64%,rgba(100,21,125,.07),transparent 55%),
+    linear-gradient(90deg,rgba(6,7,30,.53) 0%,rgba(10,6,30,.38) 46%,rgba(9,4,27,.23) 100%);
+}
+/* The rain appears above the background dimmer, but below forms/text. */
+main.ag-auth-main .ag-auth-purple-rain {
+  position:absolute;
+  z-index:2;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+main.ag-auth-main .ag-auth-two-col {z-index:3;}
+html[data-world="icy"] main.ag-auth-main .ag-auth-purple-rain {display:none !important;}
+main.ag-auth-main .ag-auth-purple-rain .ag-auth-rain-drop {
+  position:absolute;
+  top:-16%;
+  left:var(--ag-drop-left);
+  width:var(--ag-drop-width);
+  height:var(--ag-drop-height);
+  opacity:0;
+  border-radius:999px;
+  background:linear-gradient(180deg,
+    transparent 0%,
+    rgba(163,102,240,.12) 27%,
+    rgba(179,98,248,.47) 72%,
+    rgba(244,155,255,.97) 100%);
+  box-shadow:0 0 6px rgba(196,90,255,.42),0 0 14px rgba(116,65,223,.23);
+  transform:translate3d(0,-30px,0);
+  animation:agAuthPurpleFall var(--ag-drop-duration) linear var(--ag-drop-delay) infinite;
+  will-change:transform,opacity;
+}
+main.ag-auth-main .ag-auth-purple-rain .ag-auth-rain-spark {
+  position:absolute;
+  left:var(--ag-spark-left);
+  top:var(--ag-spark-top);
+  width:var(--ag-spark-size);
+  height:var(--ag-spark-size);
+  background:#e3b3ff;
+  border-radius:50%;
+  box-shadow:0 0 6px #c98fff,0 0 16px rgba(213,112,255,.64);
+  opacity:.35;
+  animation:agAuthPurpleSpark var(--ag-spark-duration) ease-in-out var(--ag-spark-delay) infinite;
+}
+@keyframes agAuthPurpleFall {
+  0%   {opacity:0;transform:translate3d(0,-30px,0);}
+  10%  {opacity:.64;}
+  84%  {opacity:.51;}
+  100% {opacity:0;transform:translate3d(0,145vh,0);}
+}
+@keyframes agAuthPurpleSpark {
+  0%,100%{opacity:.20;transform:scale(.65);}
+  50%{opacity:.83;transform:scale(1.30);}
+}
+/* Presentation improvements apply to BOTH worlds without changing the
+   Icy Ethereal background or modifying forms/validation. */
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-story-title {
+  text-wrap:balance;
+}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card {
+  min-height:76px;
+}
+main.ag-auth-main .ag-auth-feature-icon {
+  border-radius:14px;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-feature-card {
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-photo-motion {
+  /* This deliberately retains the existing image variable. */
+  background-image:var(--ag-hero-image);
+}
+/* Keep motion subtle and avoid overloading smaller screens. */
+@media(max-width:720px){
+  main.ag-auth-main .ag-auth-purple-rain .ag-auth-rain-drop:nth-child(n+27){display:none;}
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card{min-height:72px;}
+}
+@media(prefers-reduced-motion:reduce){
+  html:not([data-world="icy"]) main.ag-auth-main .ag-auth-photo-motion{animation:none!important;}
+  main.ag-auth-main .ag-auth-purple-rain{display:none!important;}
+}
+
+
+/* ============================================================
+   AFTERGLOW Auth v4 · approved Light Silver-Chrome + Glass
+   Visual-only layer. All existing auth logic, purple rain, quotes,
+   music and boards are unchanged. 2026-10-31.
+   ============================================================ */
+
+/* Light world: use an original chrome abstract based on the user's
+   reference artwork, not an exported UI mockup with text baked in. */
+html[data-world="icy"] main.ag-auth-main {
+  background-color:#e8f1fa;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-photo-motion {
+  background-image:url('/afterglow/auth-icy-chrome.webp') !important;
+  background-size:cover;
+  background-position:center center;
+  filter:saturate(1.03);
+  animation:agAuthChromeDrift 34s ease-in-out infinite alternate;
+}
+@keyframes agAuthChromeDrift {
+  0%   {transform:translate3d(-1.2%,.3%,0) scale(1.075)}
+  100% {transform:translate3d(1.1%,-.3%,0) scale(1.085)}
+}
+/* Lower overlay than before: the platinum details should actually show. */
+html[data-world="icy"] main.ag-auth-main::after {
+  background:linear-gradient(90deg,
+    rgba(237,247,255,.28) 0%, rgba(236,244,252,.32) 48%,
+    rgba(244,248,253,.10) 100%);
+}
+/* A REAL moving chrome-light pass, separate from photo zoom. */
+html[data-world="icy"] main.ag-auth-main::before {
+  content:"";
+  position:absolute;
+  z-index:2;
+  pointer-events:none;
+  top:-35%;bottom:-35%;left:-75%;width:55%;
+  background:linear-gradient(103deg,
+    transparent 0%,rgba(255,255,255,0) 26%,
+    rgba(255,255,255,.08) 38%,rgba(255,255,255,.35) 47%,
+    rgba(174,206,229,.16) 51%,rgba(255,255,255,.03) 62%,transparent 74%);
+  transform:translateX(-80%) rotate(14deg);
+  animation:agAuthChromeSweep 11s ease-in-out infinite;
+  mix-blend-mode:screen;
+}
+@keyframes agAuthChromeSweep {
+  0%,10% {transform:translateX(-85%) rotate(14deg);opacity:0;}
+  20% {opacity:.85;}
+  62% {transform:translateX(350%) rotate(14deg);opacity:.75;}
+  76%,100% {transform:translateX(350%) rotate(14deg);opacity:0;}
+}
+/* Frosted GLASS effect in both worlds; keep both texts readable. */
+main.ag-auth-main .ag-auth-form-side {
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,rgba(10,12,40,.66),rgba(15,14,50,.49)) !important;
+  border:1px solid rgba(225,191,255,.37) !important;
+  -webkit-backdrop-filter:blur(21px) saturate(145%);
+  backdrop-filter:blur(21px) saturate(145%);
+  box-shadow:0 24px 58px rgba(5,3,25,.35),inset 0 1px rgba(255,255,255,.14),0 0 24px rgba(133,73,246,.06) !important;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-form-side {
+  background:linear-gradient(135deg,rgba(255,255,255,.58),rgba(237,246,255,.46)) !important;
+  border:1px solid rgba(247,251,255,.95) !important;
+  -webkit-backdrop-filter:blur(22px) saturate(145%);
+  backdrop-filter:blur(22px) saturate(145%);
+  box-shadow:0 20px 45px rgba(57,95,132,.17),inset 0 1px 0 rgba(255,255,255,.97),0 0 0 1px rgba(131,167,198,.14) !important;
+}
+main.ag-auth-main .ag-auth-form-side form {position:relative;z-index:1;}
+/* A gentle spectral reflection crossing the glass on BOTH themes. */
+main.ag-auth-main .ag-auth-form-side::before {
+  content:"";position:absolute;inset:-50% auto -50% -160%;width:68%;
+  pointer-events:none;z-index:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.10),transparent);
+  transform:skewX(-21deg);
+  animation:agAuthGlassGlint 13s ease-in-out infinite;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-form-side::before {
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.33),transparent);
+}
+@keyframes agAuthGlassGlint {
+  0%,25% {left:-160%;opacity:0;}
+  33% {opacity:1;}
+  63% {left:175%;opacity:1;}
+  72%,100% {left:175%;opacity:0;}
+}
+/* Transparent glass service cards, with metallic edges. */
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card {
+  background:linear-gradient(140deg,rgba(39,22,81,.42),rgba(12,15,54,.33)) !important;
+  border:1px solid rgba(204,177,255,.38) !important;
+  -webkit-backdrop-filter:blur(16px) saturate(135%);
+  backdrop-filter:blur(16px) saturate(135%);
+  box-shadow:0 8px 18px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.10) !important;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card {
+  background:linear-gradient(135deg,rgba(251,254,255,.52),rgba(229,240,251,.45)) !important;
+  border:1px solid rgba(255,255,255,.88) !important;
+  box-shadow:0 9px 19px rgba(70,118,156,.14),inset 0 1px 0 rgba(255,255,255,.9),0 0 0 1px rgba(121,157,186,.12) !important;
+}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card::after {
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(112deg,transparent 13%,rgba(255,255,255,.09) 34%,transparent 46%);
+  transform:translateX(-125%);
+  transition:transform .6s ease;
+}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card:hover::after {
+  transform:translateX(125%);
+}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card:hover {
+  transform:translateY(-3px);
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-gradient-word {
+  background:linear-gradient(105deg,#164f91 4%,#6b9ec9 28%,#d2e2f0 48%,#4d84b6 70%,#244e77 94%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+/* Glass inputs should also feel native to both worlds, not hard dark rectangles. */
+main.ag-auth-main .ag-auth-form-side input.input {
+  background:rgba(6,12,37,.49) !important;
+  border:1px solid rgba(172,160,244,.40) !important;
+  color:#fcfaff !important;
+  box-shadow:inset 0 1px rgba(255,255,255,.04);
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-form-side input.input {
+  background:rgba(253,255,255,.64) !important;
+  border:1px solid rgba(147,177,204,.56) !important;
+  color:#163a62 !important;
+  box-shadow:inset 0 1px rgba(255,255,255,.9);
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-form-side input.input::placeholder {color:#6f8ba3;}
+/* Inner pages: light silver atmosphere BELOW existing content and cards.
+   The separately chosen main/home hero photograph is deliberately retained. */
+html[data-world="icy"] body:not(:has(main.ag-auth-main))::before {
+  background-image:
+    linear-gradient(180deg,rgba(247,252,255,.62),var(--ag-bg) 86%),
+    url('/afterglow/auth-icy-chrome.webp') !important;
+  background-position:center top !important;
+  background-size:cover !important;
+  opacity:.13 !important;
+}
+@media(max-width:850px) {
+  html[data-world="icy"] main.ag-auth-main .ag-auth-photo-motion {background-position:57% center;}
+  main.ag-auth-main .ag-auth-form-side {-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);}
+}
+@media(prefers-reduced-motion:reduce) {
+  html[data-world="icy"] main.ag-auth-main .ag-auth-photo-motion,
+  html[data-world="icy"] main.ag-auth-main::before,
+  main.ag-auth-main .ag-auth-form-side::before {animation:none!important;}
+  main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card::after {transition:none!important;}
+}
+
+
+/* ===============================================================
+   AFTERGLOW v5 — ANIMATED WORLDS ACROSS THE INNER SITE
+   Scoped to pages OTHER than /signup and /login.
+   Does not change the chosen homepage hero or quote photo cards.
+   Loaded by the EXISTING auth-worlds-motion.css link (no extra link).
+   =============================================================== */
+
+/* Wallpaper behind all inner pages, including the area below home hero.
+   Photos never cover text because all page content remains above this layer. */
+html:not([data-world="icy"]) body:not(:has(main.ag-auth-main))::before {
+    background-image:
+      linear-gradient(180deg,rgba(8,7,29,.52) 0%,rgba(9,7,28,.35) 42%,rgba(6,7,24,.72) 100%),
+      url('/afterglow/auth-purple-rain.gif') !important;
+    background-color:#080719 !important;
+    background-repeat:no-repeat,no-repeat !important;
+    background-position:center center,center center !important;
+    background-size:cover,cover !important;
+    opacity:.88 !important;
+    filter:none !important;
+}
+html[data-world="icy"] body:not(:has(main.ag-auth-main))::before {
+    background-image:
+      linear-gradient(140deg,rgba(243,249,255,.35),rgba(226,240,252,.27) 48%,rgba(248,252,255,.33)),
+      url('/afterglow/auth-icy-chrome.webp') !important;
+    background-color:#ecf5ff !important;
+    background-position:center center,center center !important;
+    background-size:cover,cover !important;
+    background-repeat:no-repeat,no-repeat !important;
+    opacity:.74 !important;
+    filter:none !important;
+}
+
+/* The photo on the homepage HERO continues to be the one the user chose:
+   /afterglow/hero-cyber-night.jpg and /afterglow/hero-icy-ethereal.jpg. */
+body:not(:has(main.ag-auth-main)) > main,
+body:not(:has(main.ag-auth-main)) > header,
+body:not(:has(main.ag-auth-main)) > nav,
+body:not(:has(main.ag-auth-main)) > footer {position:relative;z-index:2;}
+
+/* The ambient effect layer never receives pointer/keyboard input. */
+.ag-inner-motion {
+  position:fixed;inset:0;z-index:1;overflow:hidden;
+  pointer-events:none;user-select:none;
+  contain:layout style paint;
+}
+.ag-inner-motion .ag-im-dark,
+.ag-inner-motion .ag-im-icy{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+html[data-world="icy"] .ag-inner-motion .ag-im-dark{display:none;}
+html:not([data-world="icy"]) .ag-inner-motion .ag-im-icy{display:none;}
+
+/* PURPLE RAIN — real continuous downward movement, not background zoom. */
+.ag-im-dark .ag-im-drop{
+  position:absolute;left:var(--im-x);top:-22%;display:block;
+  width:var(--im-w);height:var(--im-h);border-radius:999px;
+  background:linear-gradient(to bottom,transparent 0%,rgba(184,94,255,.10) 28%,rgba(196,83,250,.51) 77%,rgba(238,174,255,.87) 100%);
+  box-shadow:0 0 7px rgba(186,86,249,.55),0 0 17px rgba(155,66,240,.17);
+  opacity:0;transform:translate3d(0,-9vh,0);
+  animation:agInnerPurpleFall var(--im-dur) linear var(--im-delay) infinite;
+  will-change:transform,opacity;
+}
+.ag-im-dark .ag-im-star{
+  position:absolute;left:var(--im-x);top:var(--im-y);height:var(--im-size);width:var(--im-size);
+  background:#e9caff;border-radius:50%;opacity:.15;
+  box-shadow:0 0 8px #bb82ff,0 0 22px rgba(241,169,255,.48);
+  animation:agInnerTwinkle var(--im-dur) ease-in-out var(--im-delay) infinite;
+}
+@keyframes agInnerPurpleFall {
+   0%{transform:translate3d(0,-10vh,0);opacity:0}
+   12%{opacity:.47}
+   87%{opacity:.40}
+   100%{transform:translate3d(0,125vh,0);opacity:0}
+}
+@keyframes agInnerTwinkle {0%,100%{opacity:.16;transform:scale(.6)}50%{opacity:.75;transform:scale(1.35)}}
+
+/* ICY SILVER — TWO crossing reflective light beams, instead of simple zoom. */
+.ag-im-icy .ag-im-chrome-sweep{
+  position:absolute;top:-30%;left:-65%;height:165%;width:44%;
+  background:linear-gradient(100deg,
+    transparent 6%,rgba(255,255,255,.0) 28%,
+    rgba(255,255,255,.13) 39%,rgba(255,255,255,.46) 47%,
+    rgba(155,193,219,.17) 52%,rgba(255,255,255,.07) 61%,
+    transparent 76%);
+  mix-blend-mode:screen;opacity:0;
+  transform:translate3d(-70vw,0,0) rotate(17deg);
+  animation:agInnerChromeSweep 15s ease-in-out infinite;
+  will-change:transform,opacity;
+}
+.ag-im-icy .ag-im-chrome-sweep:nth-child(2){animation-delay:-8.2s;animation-duration:19s;width:28%;}
+@keyframes agInnerChromeSweep {
+  0%,13%{transform:translate3d(-65vw,0,0) rotate(17deg);opacity:0}
+  23%{opacity:.75}
+  65%{transform:translate3d(220vw,0,0) rotate(17deg);opacity:.8}
+  73%,100%{transform:translate3d(220vw,0,0) rotate(17deg);opacity:0}
+}
+/* Very subtle silver particles floating across the stationary chrome art. */
+.ag-im-icy .ag-im-glint{
+  position:absolute;left:var(--im-x);top:var(--im-y);
+  height:var(--im-size);width:var(--im-size);border-radius:50%;opacity:.12;
+  background:#fff;box-shadow:0 0 5px white,0 0 13px rgba(140,192,242,.8),0 0 21px rgba(237,249,255,.78);
+  animation:agInnerSilverFloat var(--im-dur) ease-in-out var(--im-delay) infinite;
+}
+@keyframes agInnerSilverFloat {
+  0%,100%{transform:translate3d(0,0,0) scale(.7);opacity:.13}
+  50%{transform:translate3d(11px,-16px,0) scale(1.5);opacity:.75}
+}
+
+/* Controlled glass surfaces on inner pages, not over image thumbnails or
+   custom mood-photo quote cards (their selected artwork remains visible). */
+body:not(:has(main.ag-auth-main)) main :is(
+  .ag-dg,.ag-boards-teaser,.ag-ce-teaser,.ag-now-playing,
+  .ag-song-card,.ag-music-form-section,.ag-board-card,.ag-board-form,
+  .ag-ce-card,.ag-ce-form,.ag-ce-search,.ag-boards-hero,.ag-ce-hero
+) {
+  -webkit-backdrop-filter:blur(13px) saturate(125%);
+  backdrop-filter:blur(13px) saturate(125%);
+  border-color:rgba(214,172,250,.28);
+}
+html:not([data-world="icy"]) body:not(:has(main.ag-auth-main)) main :is(
+  .ag-boards-teaser,.ag-ce-teaser,.ag-now-playing,.ag-song-card,
+  .ag-music-form-section,.ag-board-card,.ag-board-form,.ag-ce-card,.ag-ce-form
+){
+  background-color:rgba(15,12,45,.60);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 32px rgba(3,4,20,.17);
+}
+html[data-world="icy"] body:not(:has(main.ag-auth-main)) main :is(
+  .ag-boards-teaser,.ag-ce-teaser,.ag-now-playing,.ag-song-card,
+  .ag-music-form-section,.ag-board-card,.ag-board-form,.ag-ce-card,.ag-ce-form
+){
+  background-color:rgba(239,248,255,.72);
+  border-color:rgba(255,255,255,.8);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.84),0 12px 30px rgba(64,114,150,.13);
+}
+/* Quotes with user-selected background image and text colors are excluded. */
+
+@media(max-width:700px){
+  .ag-im-dark .ag-im-drop:nth-child(n+17),.ag-im-icy .ag-im-glint:nth-child(n+9){display:none;}
+  .ag-im-icy .ag-im-chrome-sweep{animation-duration:19s;}
+}
+@media(prefers-reduced-motion:reduce){
+  .ag-inner-motion{display:none!important;}
+  html:not([data-world="icy"]) body:not(:has(main.ag-auth-main))::before,
+  html[data-world="icy"] body:not(:has(main.ag-auth-main))::before {background-attachment:scroll!important;}
+}
+
+
+/* ===================================================================
+   AFTERGLOW v6 — REAL CITY WORLDS / VISIBLE MOTION / GLASS
+   Designed for the user's existing AFTERGLOW auth & internal app.
+   Retains the v5 form and service markup, routes and all card images.
+   Includes actual city images, NOT exported UI-preview screenshots.
+   =================================================================== */
+:root {
+  --ag-v6-night: url('/afterglow/ag-v6-neon-city.webp');
+  --ag-v6-day: url('/afterglow/ag-v6-silver-city.webp');
+}
+/* AUTH: no photo zoom. Give each world an actual futuristic environment. */
+html:not([data-world="icy"]) main.ag-auth-main .ag-auth-photo-motion {
+  inset:0 !important;
+  transform:none !important;
+  animation:none !important;
+  background-image:
+    linear-gradient(100deg,rgba(7,6,24,.40),rgba(17,9,37,.27) 55%,rgba(5,5,19,.23)),
+    var(--ag-v6-night) !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  filter:none !important;
+}
+/* Blend the user's original purple-rain artwork over the cyber city.
+   The file is static; animated rain comes from the v5 CSS elements. */
+html:not([data-world="icy"]) main.ag-auth-main .ag-auth-photo-motion::before {
+  content:"";
+  position:absolute;inset:0;pointer-events:none;
+  background:url('/afterglow/auth-purple-rain.gif') center/cover no-repeat;
+  mix-blend-mode:screen;opacity:.32;
+}
+html:not([data-world="icy"]) main.ag-auth-main::after {
+  background:linear-gradient(90deg,rgba(4,5,23,.55) 0%,rgba(6,5,26,.30) 54%,rgba(5,4,21,.20) 100%) !important;
+}
+html[data-world="icy"] main.ag-auth-main {
+  background-color:#dceaf4 !important;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-photo-motion {
+  inset:0 !important;
+  transform:none !important;
+  animation:none !important;
+  background-image:
+    linear-gradient(110deg,rgba(235,245,254,.24),rgba(255,255,255,.04) 65%,rgba(220,237,250,.08)),
+    var(--ag-v6-day) !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  filter:contrast(1.035) saturate(.95) !important;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-photo-motion::before {display:none !important;}
+html[data-world="icy"] main.ag-auth-main::after {
+  background:linear-gradient(90deg,rgba(236,247,255,.32) 0%,rgba(240,249,255,.16) 49%,rgba(237,247,255,.11)) !important;
+}
+/* The silver chrome sweep is a real animation independent of the image. */
+html[data-world="icy"] main.ag-auth-main::before {
+  background:linear-gradient(100deg,transparent 4%,rgba(255,255,255,0) 23%,rgba(255,255,255,.08) 35%,rgba(255,255,255,.52) 48%,rgba(141,190,220,.19) 54%,transparent 76%) !important;
+  animation:agAuthChromeSweep 10.8s ease-in-out infinite !important;
+}
+/* Visible, separately animated chrome orbits and tiny glints. */
+main.ag-auth-main .ag-v6-light-effects {
+  position:absolute;inset:0;z-index:2;overflow:hidden;
+  pointer-events:none;user-select:none;display:none;
+}
+html[data-world="icy"] main.ag-auth-main .ag-v6-light-effects {display:block;}
+main.ag-auth-main .ag-v6-glint {
+  position:absolute;left:var(--v6-x);top:var(--v6-y);
+  width:var(--v6-size);height:var(--v6-size);border-radius:50%;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 0 8px 3px rgba(248,252,255,.95),0 0 25px rgba(76,154,229,.63);
+  animation:agV6LightFloat var(--v6-duration) ease-in-out var(--v6-delay) infinite alternate;
+}
+main.ag-auth-main .ag-v6-glint::after {
+  content:"";position:absolute;left:50%;top:50%;width:1px;height:17px;
+  transform:translate(-50%,-50%) rotate(35deg);background:linear-gradient(transparent,#fff,transparent);
+}
+main.ag-auth-main .ag-v6-orbit {
+  position:absolute;left:var(--v6-x);top:var(--v6-y);
+  width:clamp(100px,17vw,320px);height:clamp(12px,4vw,70px);
+  border:1px solid rgba(255,255,255,.55);border-bottom-color:rgba(89,151,210,.22);
+  border-radius:50%;box-shadow:0 1px 2px rgba(255,255,255,.5);
+  transform:rotate(-22deg);
+  animation:agV6Orbit calc(11s + var(--v6-i) * 3s) ease-in-out infinite alternate;
+  opacity:.48;
+}
+@keyframes agV6LightFloat {
+  0% {opacity:.2;transform:translate3d(-12px,10px,0) scale(.65)}
+  55% {opacity:.92;transform:translate3d(8px,-13px,0) scale(1.18)}
+  100% {opacity:.3;transform:translate3d(23px,-20px,0) scale(.83)}
+}
+@keyframes agV6Orbit {
+  from {opacity:.22;transform:translate3d(-12px,7px,0) rotate(-23deg)}
+  to {opacity:.73;transform:translate3d(25px,-14px,0) rotate(-16deg)}
+}
+/* Auth glass panels; transparent enough to show the city, opaque enough to read. */
+main.ag-auth-main .ag-auth-form-side {
+  background:linear-gradient(132deg,rgba(16,12,49,.72),rgba(7,12,38,.59)) !important;
+  border:1px solid rgba(216,175,255,.48) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(135%) !important;
+  backdrop-filter:blur(18px) saturate(135%) !important;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-form-side {
+  background:linear-gradient(137deg,rgba(248,253,255,.71),rgba(225,238,249,.62)) !important;
+  border:1px solid rgba(255,255,255,.95) !important;
+  box-shadow:0 18px 45px rgba(73,117,159,.15),inset 0 1px rgba(255,255,255,.96) !important;
+}
+main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card {
+  background:linear-gradient(135deg,rgba(32,17,73,.55),rgba(14,17,52,.45)) !important;
+  -webkit-backdrop-filter:blur(15px) saturate(120%) !important;
+  backdrop-filter:blur(15px) saturate(120%) !important;
+}
+html[data-world="icy"] main.ag-auth-main .ag-auth-story-v2 .ag-auth-feature-card {
+  background:linear-gradient(125deg,rgba(253,254,255,.67),rgba(231,241,251,.58)) !important;
+  border:1px solid rgba(255,255,255,.93) !important;
+}
+/* Entire app AFTER login: one cohesive city background per theme.
+   Excludes login/signup and doesn't override the chosen homepage hero. */
+html:not([data-world="icy"]) body:not(:has(main.ag-auth-main))::before {
+  background-image:
+    linear-gradient(180deg,rgba(7,6,30,.34),rgba(7,6,29,.46) 67%,rgba(5,7,29,.60)),
+    var(--ag-v6-night) !important;
+  background-position:center center,center center !important;
+  background-size:cover,cover !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+html[data-world="icy"] body:not(:has(main.ag-auth-main))::before {
+  background-image:
+    linear-gradient(180deg,rgba(242,250,255,.42),rgba(229,243,252,.59) 65%,rgba(234,247,254,.77)),
+    var(--ag-v6-day) !important;
+  background-position:center center,center center !important;
+  background-size:cover,cover !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+/* A tiny amount of purple texture overlays the inner dark scene, while
+   actual moving drops are produced by the existing v5 JavaScript. */
+.ag-inner-motion .ag-im-dark::before {
+  content:"";position:absolute;inset:0;
+  background:url('/afterglow/auth-purple-rain.gif') center/cover no-repeat;
+  opacity:.16;mix-blend-mode:screen;pointer-events:none;
+}
+/* Actual glass/ribbon reflections on the internal light world; not zoom. */
+.ag-inner-motion .ag-im-icy::before {
+  content:"";position:absolute;inset:-20% -30%;pointer-events:none;
+  background:
+    linear-gradient(109deg,transparent 20%,rgba(255,255,255,.12) 37%,rgba(255,255,255,.36) 44%,rgba(157,194,215,.16) 49%,transparent 64%);
+  opacity:.7;
+  transform:translate3d(-40%,0,0) rotate(-7deg);
+  animation:agV6InternalSweep 14s ease-in-out infinite;
+}
+.ag-inner-motion .ag-im-icy::after {
+  content:"";position:absolute;width:34vw;height:9vw;left:42%;top:16%;
+  border:1px solid rgba(255,255,255,.75);border-radius:50%;
+  transform:rotate(-21deg);pointer-events:none;
+  box-shadow:0 0 8px rgba(255,255,255,.25);
+  opacity:.52;animation:agV6Orbit 21s ease-in-out infinite alternate;
+}
+@keyframes agV6InternalSweep {
+  0%,9%{transform:translate3d(-65%,0,0) rotate(-7deg);opacity:0}
+  20%{opacity:.8}
+  62%{transform:translate3d(85%,0,0) rotate(-7deg);opacity:.75}
+  85%,100%{transform:translate3d(85%,0,0) rotate(-7deg);opacity:0}
+}
+/* Transparent glass surfaces on pages (avoid quote cards' own artwork). */
+html:not([data-world="icy"]) body:not(:has(main.ag-auth-main)) main :is(.ag-dg,.ag-boards-teaser,.ag-ce-teaser,.ag-now-playing,.ag-song-card,.ag-music-form-section,.ag-board-card,.ag-board-form,.ag-ce-card,.ag-ce-form) {
+  border-color:rgba(203,166,250,.40) !important;
+  -webkit-backdrop-filter:blur(17px) saturate(120%) !important;
+  backdrop-filter:blur(17px) saturate(120%) !important;
+  box-shadow:inset 0 1px rgba(255,255,255,.07),0 12px 28px rgba(4,5,31,.22);
+}
+html[data-world="icy"] body:not(:has(main.ag-auth-main)) main :is(.ag-dg,.ag-boards-teaser,.ag-ce-teaser,.ag-now-playing,.ag-song-card,.ag-music-form-section,.ag-board-card,.ag-board-form,.ag-ce-card,.ag-ce-form) {
+  background-color:rgba(243,250,255,.77) !important;
+  border-color:rgba(255,255,255,.91) !important;
+  -webkit-backdrop-filter:blur(15px) saturate(115%) !important;
+  backdrop-filter:blur(15px) saturate(115%) !important;
+  box-shadow:0 12px 27px rgba(53,105,156,.14),inset 0 1px rgba(255,255,255,.9);
+}
+@media (max-width:760px) {
+  html:not([data-world="icy"]) main.ag-auth-main .ag-auth-photo-motion,
+  html[data-world="icy"] main.ag-auth-main .ag-auth-photo-motion {background-position:57% center !important;}
+  main.ag-auth-main .ag-v6-orbit:nth-of-type(n+2){display:none;}
+}
+@media(prefers-reduced-motion:reduce) {
+  main.ag-auth-main .ag-v6-light-effects {display:none !important;}
+  .ag-inner-motion .ag-im-icy::before,.ag-inner-motion .ag-im-icy::after {animation:none!important;}
+  main.ag-auth-main .ag-auth-photo-motion::before {animation:none!important;}
+}

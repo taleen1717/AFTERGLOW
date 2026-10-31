@@ -1,0 +1,32 @@
+/* AFTERGLOW / Vinyl + Video switch. Additive layer for existing My Soundtrack */
+.ag-song-card{container-type:inline-size}
+.ag-vp-details{margin:16px 0!important}
+.ag-vp-details>summary{display:inline-flex!important;align-items:center;gap:6px;background:var(--ag-surface)!important;border:1px solid var(--ag-border)!important;border-radius:999px!important;padding:10px 15px!important;font-weight:750!important;color:var(--ag-ink)!important}
+.ag-vp-details[open]>summary{border-color:var(--ag-secondary)!important}
+.ag-vp-switcher{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 12px}
+.ag-vp-tab{cursor:pointer;border-radius:99px;padding:10px 14px;border:1px solid var(--ag-border);color:var(--ag-ink);background:var(--ag-surface);font-size:12px;font-weight:750}
+.ag-vp-tab.is-active{background:var(--ag-primary);color:var(--ag-primary-ink);box-shadow:0 0 18px var(--ag-glow);border-color:transparent}
+.ag-vp-tab:focus-visible{outline:2px solid var(--ag-secondary);outline-offset:2px}
+.ag-vp-stage{--ag-vp-disc-size:clamp(145px,20vw,230px);border:1px solid var(--ag-border);border-radius:20px;padding:14px;background:radial-gradient(ellipse at 10% 15%,var(--ag-glow),transparent 60%),var(--ag-surface);transition:background .25s}
+.ag-vp-stage.is-vinyl{display:grid;grid-template-columns:minmax(140px,.85fr) minmax(200px,1.4fr);gap:16px;align-items:center}
+.ag-vp-artwork{display:grid;justify-items:center;gap:14px;min-width:0}
+.ag-vp-record{width:min(100%,var(--ag-vp-disc-size));aspect-ratio:1/1;position:relative;display:grid;place-items:center;border-radius:50%;background:repeating-radial-gradient(circle at center,rgba(228,236,255,.23) 0px,transparent 1px,transparent 5px,rgba(0,0,0,.36) 7px,transparent 8px,transparent 11px),conic-gradient(from 20deg,#090a1a,#2b3166 20%,#070914 40%,#342b5d 60%,#080a17 80%,#242e57);box-shadow:0 14px 36px rgba(0,0,0,.35),0 0 27px var(--ag-glow);border:5px solid rgba(255,255,255,.12);animation:ag-vp-spin 12s linear infinite;will-change:transform}
+.ag-vp-record::before{content:"";position:absolute;inset:5%;border-radius:50%;border:1px solid rgba(239,248,255,.23);pointer-events:none}
+.ag-vp-label{position:relative;display:grid;place-items:center;width:42%;aspect-ratio:1/1;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.65);background:var(--ag-primary);font-size:24px;color:var(--ag-primary-ink)}
+.ag-vp-label img{display:block;width:100%;height:100%;object-fit:cover}
+.ag-vp-hole{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:#121628;border:2px solid #eaf6ff}
+.ag-vp-caption{text-align:center;max-width:100%;overflow-wrap:anywhere;font-size:13px}
+.ag-vp-caption strong,.ag-vp-caption span{display:block;color:var(--ag-ink)}
+.ag-vp-caption span{color:var(--ag-muted);margin-top:4px;font-size:12px}
+.ag-vp-embed-box{min-width:0;width:100%}
+.ag-vp-embed-label{font-size:10px;letter-spacing:.17em;font-weight:850;color:var(--ag-secondary);margin-bottom:9px}
+.ag-vp-embed-box iframe{display:block;width:100%;min-width:0;height:220px!important;min-height:200px;border:0;border-radius:12px;background:#080b16;margin:0!important}
+.ag-vp-hint{color:var(--ag-muted);font-size:11px;line-height:1.55;margin-top:9px}
+.ag-vp-stage.is-video{display:block}
+.ag-vp-stage.is-video .ag-vp-artwork{display:none}
+.ag-vp-stage.is-video .ag-vp-embed-box iframe{height:315px!important}
+@keyframes ag-vp-spin{to{transform:rotate(360deg)}}
+html[data-world="icy"] .ag-vp-record{background:repeating-radial-gradient(circle,rgba(237,249,255,.6) 0 1px,transparent 1px 7px,rgba(27,67,112,.15) 8px 9px),conic-gradient(#a5c8ec,#f4fbff,#90addb,#e9f4ff,#7ea3d5,#e2f7ff);border-color:#d9eeff;box-shadow:0 10px 27px rgba(35,74,120,.20),0 0 23px rgba(122,176,255,.4)}
+@container (max-width:560px){.ag-vp-stage.is-vinyl{grid-template-columns:1fr}.ag-vp-stage{padding:12px}.ag-vp-record{--ag-vp-disc-size:185px}.ag-vp-stage.is-video .ag-vp-embed-box iframe{height:250px!important}}
+@media (max-width:700px){.ag-vp-stage.is-vinyl{grid-template-columns:1fr}.ag-vp-stage{padding:12px}.ag-vp-record{--ag-vp-disc-size:190px}.ag-vp-embed-box iframe{height:220px!important}.ag-vp-stage.is-video .ag-vp-embed-box iframe{height:245px!important}}
+@media (prefers-reduced-motion:reduce){.ag-vp-record{animation:none!important}}

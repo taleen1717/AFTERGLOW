@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920">
+<defs>
+ <linearGradient id="sky" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#100d37"/><stop offset=".45" stop-color="#27115f"/><stop offset=".78" stop-color="#080c2d"/><stop offset="1" stop-color="#05071a"/></linearGradient>
+ <linearGradient id="reflect" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#0c0d2a"/><stop offset="1" stop-color="#260d5a"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="11"/></filter>
+ <pattern id="rain" width="100" height="170" patternUnits="userSpaceOnUse" patternTransform="skewX(-13)"><path d="M15 0v49M67 70v46M91 22v34" stroke="#a08aff" opacity=".3" stroke-width="2"/></pattern>
+</defs>
+<rect width="1600" height="920" fill="url(#sky)"/><circle cx="1250" cy="200" r="230" fill="#e84dff" opacity=".22" filter="url(#glow)"/><circle cx="980" cy="250" r="180" fill="#0abafa" opacity=".15" filter="url(#glow)"/>
+<g fill="#080d2a">
+<path d="M650 570V340h95v230h-95m130 0V230h130v340zM940 570V310h135v260zM1110 570V200h145v370zM1290 570V255h110v315zM1420 570V150h180v420z"/>
+</g>
+<g stroke="#40d5ff" stroke-width="3" opacity=".68"><path d="M785 265h120M960 354h95M1130 240h105M1430 188h160"/><path d="M805 290v180M1147 270v220"/></g>
+<g stroke="#f54acb" stroke-width="4" opacity=".95"><path d="M676 368h50M676 406h50M676 444h50M805 385h80M805 430h80M965 400h85M965 455h85M1140 380h96M1140 442h96M1310 360h70M1450 290h130M1450 370h130M1450 450h130"/></g>
+<g fill="#11d6ff" opacity=".85"><circle cx="1193" cy="120" r="4"/><circle cx="1420" cy="105" r="3"/><circle cx="1053" cy="114" r="5"/><circle cx="745" cy="123" r="3"/><circle cx="900" cy="70" r="2"/></g>
+<path d="M0 560H1600V920H0z" fill="url(#reflect)"/><g opacity=".4" stroke-width="5"><path d="M700 580 630 920" stroke="#f341b8"/><path d="M815 570 875 920" stroke="#45bfff"/><path d="M1100 570 1160 920" stroke="#f341b8"/><path d="M1330 575 1400 920" stroke="#45bfff"/></g><path d="M0 650H1600M0 725H1600M0 820H1600" stroke="#ab3eca" opacity=".22" stroke-width="3"/>
+<rect width="1600" height="920" fill="url(#rain)"/><g fill="#cdebff"><path d="m1190 50 5 17 17 5-17 5-5 17-5-17-17-5 17-5z"/><path d="m1000 155 4 11 11 4-11 4-4 11-4-11-11-4 11-4z"/></g>
+</svg>

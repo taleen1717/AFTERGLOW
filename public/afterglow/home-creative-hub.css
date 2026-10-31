@@ -1,0 +1,88 @@
+/* AFTERGLOW Home Creative Hub v7 — isolated homepage presentation enhancement.
+   Light world is selected by html[data-world="icy"], the existing site switcher.
+   No dependencies, no edits to service logic. */
+.ag-hub {
+    --hub-ink: #f7f5ff;
+    --hub-sub: #b7bee0;
+    --hub-line: rgba(181, 174, 255, .26);
+    --hub-glass: linear-gradient(140deg, rgba(26, 25, 65, .78), rgba(28, 21, 67, .58));
+    --hub-chip: rgba(18, 22, 62, .55);
+    --hub-icon: #d5a6ff;
+    position: relative;
+    z-index: 1;
+    max-width: 1380px;
+    width: min(100% - 36px, 1380px);
+    margin: clamp(24px, 3.5vw, 50px) auto 18px;
+    color: var(--hub-ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+.ag-hub *, .ag-hub *::before, .ag-hub *::after {box-sizing: border-box}
+.ag-hub-heading {display:flex;align-items:end;justify-content:space-between;gap:22px;margin:0 0 19px;padding:0 5px}
+.ag-hub-eyebrow{font:800 11px/1.35 ui-sans-serif,system-ui,sans-serif;letter-spacing:.22em;color:#85deff;margin:0 0 9px}
+.ag-hub-eyebrow span{color:#ea8cff}
+.ag-hub-heading h2{font:500 clamp(27px,3.15vw,42px)/1.14 Georgia,'Times New Roman',serif!important;color:var(--hub-ink)!important;margin:0 0 8px!important;letter-spacing:-.026em}
+.ag-hub-heading h2 em{font-style:normal;color:#c7a8ff}
+.ag-hub-intro{font-size:13px;line-height:1.55;color:var(--hub-sub);margin:0}
+.ag-hub-heading-mark{font-size:10px;white-space:nowrap;letter-spacing:.17em;color:#93a5dd;border:1px solid var(--hub-line);border-radius:99px;padding:10px 14px;background:var(--hub-chip)}
+.ag-hub-layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);align-items:stretch;gap:18px}
+.ag-hub-soundtrack{min-width:0;display:flex}
+/* Retain the EXISTING functional music component and its repeat/track info. */
+.ag-hub .ag-spotlight{flex:1;width:100%;min-width:0;max-width:none!important;min-height:350px!important;height:100%;margin:0!important;padding:clamp(20px,2.35vw,34px)!important;grid-template-columns:minmax(0,1.15fr) minmax(120px,.85fr)!important;gap:10px;border-radius:26px!important}
+.ag-hub .ag-spotlight-copy{min-width:0}
+.ag-hub .ag-spotlight-eyebrow{font-size:9px!important;letter-spacing:.12em;margin-bottom:12px!important}
+.ag-hub .ag-spotlight h2{font-size:clamp(26px,2.7vw,45px)!important;letter-spacing:-.04em!important;line-height:1.05!important}
+.ag-hub .ag-spotlight-tagline{font-size:clamp(16px,1.7vw,21px)!important}
+.ag-hub .ag-spotlight-description{font-size:12px!important;line-height:1.55!important;margin-bottom:15px!important}
+.ag-hub .ag-spotlight-primary{font-size:12px!important;padding:11px 14px!important}
+.ag-hub .ag-spotlight-count{font-size:10px}
+.ag-hub .ag-spotlight-now{padding-top:11px;margin-top:14px}
+.ag-hub .ag-spotlight-art{min-width:0;min-height:210px}
+.ag-hub .ag-spotlight-disc{width:clamp(140px,13.8vw,218px)!important;height:auto;aspect-ratio:1!important;min-width:0;flex:none;display:grid;place-items:center;transform-origin:50% 50%!important;will-change:transform;
+    /* Uneven silvery glints make the rotation visibly apparent. */
+    background:
+        repeating-radial-gradient(circle at center,rgba(255,255,255,.11) 0 1px,transparent 2px 7px),
+        conic-gradient(from 15deg,#121026 0deg,#45416f 44deg,#080e21 79deg,#a7c0f0 99deg,#131128 127deg,#292354 175deg,#080c1d 242deg,#47598e 282deg,#151024 360deg);
+    animation: ag-hub-vinyl-turn 7s linear infinite!important;
+}
+.ag-hub .ag-spotlight-disc-label{transform:rotate(-18deg)}
+.ag-hub .ag-spotlight-orbit-one{width:clamp(160px,23vw,250px);height:90px}
+.ag-hub .ag-spotlight-orbit-two{width:clamp(140px,21vw,235px);height:125px}
+.ag-hub .ag-spotlight-mood{font-size:7px;letter-spacing:.06em;max-width:100%;white-space:normal;text-align:center}
+@keyframes ag-hub-vinyl-turn {from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* Four harmonious services instead of several unrelated full-width ribbons. */
+.ag-hub-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:14px;min-width:0}
+.ag-hub-tile{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;align-items:start;min-width:0;gap:15px;padding:22px 21px 18px;border:1px solid var(--hub-line);border-radius:24px;background:var(--hub-glass);color:var(--hub-ink)!important;backdrop-filter:blur(17px) saturate(140%);-webkit-backdrop-filter:blur(17px) saturate(140%);box-shadow:0 12px 30px rgba(1,3,25,.12),inset 0 1px rgba(255,255,255,.13);text-decoration:none!important;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.ag-hub-tile::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 105% -18%,var(--hub-accent,rgba(152,108,255,.18)),transparent 60%);opacity:1}
+.ag-hub-tile:hover{transform:translateY(-4px);border-color:rgba(198,165,255,.7);box-shadow:0 16px 30px rgba(1,3,25,.2),0 0 23px rgba(135,93,228,.12)}
+.ag-hub-tile:focus-visible{outline:3px solid #8cdbff;outline-offset:3px}
+.ag-hub-icon{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;border:1px solid rgba(211,197,255,.37);background:linear-gradient(145deg,rgba(158,115,255,.23),rgba(83,113,230,.11));box-shadow:inset 0 1px rgba(255,255,255,.23);color:var(--hub-tile-ink,#c9a7ff);flex:none}
+.ag-hub-icon svg{width:26px;height:26px}
+.ag-hub-tile-body{display:flex;flex-direction:column;gap:6px;max-width:96%;min-width:0}
+.ag-hub-tile-tag{font-size:9px;font-weight:800;letter-spacing:.14em;line-height:1.4;color:var(--hub-sub)}
+.ag-hub-tile strong{font-size:clamp(16px,1.45vw,21px);letter-spacing:-.025em;font-weight:750;line-height:1.2;color:var(--hub-ink)}
+.ag-hub-tile-body>span:last-child{font-size:12px;line-height:1.5;color:var(--hub-sub)}
+.ag-hub-arrow{position:absolute;right:19px;top:25px;font-size:19px;line-height:1;color:var(--hub-ink);opacity:.73;transition:transform .2s}
+.ag-hub-tile:hover .ag-hub-arrow{transform:translate(3px,-3px)}
+.ag-hub-quote{--hub-accent:rgba(189,112,237,.32);--hub-tile-ink:#e4a9ff}
+.ag-hub-art{--hub-accent:rgba(114,176,238,.28);--hub-tile-ink:#90eaff}
+.ag-hub-code{--hub-accent:rgba(68,149,233,.31);--hub-tile-ink:#a0caff}
+.ag-hub-glow{--hub-accent:rgba(255,185,213,.27);--hub-tile-ink:#ffc3e7}
+/* Silver/blue-light palette: keep text legible over the animated city background. */
+html[data-world="icy"] .ag-hub{--hub-ink:#183e68;--hub-sub:#4d6b90;--hub-line:rgba(105,160,218,.42);--hub-glass:linear-gradient(142deg,rgba(252,254,255,.81),rgba(228,244,255,.68));--hub-chip:rgba(246,251,255,.75)}
+html[data-world="icy"] .ag-hub-eyebrow{color:#2069a8}
+html[data-world="icy"] .ag-hub-eyebrow span{color:#5284bc}
+html[data-world="icy"] .ag-hub-heading h2 em{color:#5286bc}
+html[data-world="icy"] .ag-hub-heading-mark{color:#45729a}
+html[data-world="icy"] .ag-hub-tile{box-shadow:0 12px 26px rgba(62,104,170,.12),inset 0 1px rgba(255,255,255,.82)}
+html[data-world="icy"] .ag-hub-tile:hover{border-color:rgba(67,143,211,.77);box-shadow:0 18px 30px rgba(68,125,183,.17)}
+html[data-world="icy"] .ag-hub-icon{border-color:rgba(111,167,225,.45);background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(186,222,252,.62))}
+html[data-world="icy"] .ag-hub-quote{--hub-tile-ink:#5c78b9}
+html[data-world="icy"] .ag-hub-art{--hub-tile-ink:#3b9cbb}
+html[data-world="icy"] .ag-hub-code{--hub-tile-ink:#427ed1}
+html[data-world="icy"] .ag-hub-glow{--hub-tile-ink:#7890c3}
+html[data-world="icy"] .ag-hub .ag-spotlight-disc{background:repeating-radial-gradient(circle,rgba(255,255,255,.55) 0 1px,transparent 2px 7px),conic-gradient(from 15deg,#7593c1 0deg,#f9fcff 45deg,#a1c5ea 75deg,#5c80b3 97deg,#ecfaff 140deg,#97aed6 205deg,#fff 268deg,#7098cd 330deg,#769bc7 360deg)}
+/* Daily Glow is still the existing real feature, below this grid. */
+@media(max-width:1120px){.ag-hub-layout{grid-template-columns:1fr}.ag-hub .ag-spotlight{min-height:290px!important}.ag-hub-links{grid-template-rows:none}.ag-hub-tile{min-height:175px}}
+@media(max-width:650px){.ag-hub{width:min(100% - 24px,1380px)}.ag-hub-heading{display:block}.ag-hub-heading-mark{display:none}.ag-hub-intro{max-width:400px}.ag-hub-layout{gap:12px}.ag-hub .ag-spotlight{grid-template-columns:minmax(0,1fr) 140px!important;min-height:290px!important;padding:18px!important}.ag-hub .ag-spotlight-art{min-height:160px}.ag-hub .ag-spotlight-disc{width:125px!important}.ag-hub .ag-spotlight-description{display:none}.ag-hub .ag-spotlight-mood{display:none}.ag-hub-links{gap:11px}.ag-hub-tile{padding:16px 13px;gap:12px;min-height:177px;border-radius:17px}.ag-hub-icon{width:42px;height:42px;border-radius:13px}.ag-hub-icon svg{width:21px;height:21px}.ag-hub-tile-tag{font-size:8px}.ag-hub-tile strong{font-size:15px}.ag-hub-tile-body>span:last-child{font-size:11px}.ag-hub-arrow{top:18px;right:12px;font-size:15px}}
+@media(max-width:420px){.ag-hub .ag-spotlight{grid-template-columns:1fr!important}.ag-hub .ag-spotlight-art{min-height:142px}.ag-hub .ag-spotlight-disc{width:130px!important}.ag-hub-links{grid-template-columns:1fr}.ag-hub-tile{min-height:130px;flex-direction:row;align-items:center}.ag-hub-tile-body{padding-right:20px}}
+@media(prefers-reduced-motion:reduce){.ag-hub .ag-spotlight-disc{animation:none!important}.ag-hub-tile,.ag-hub-arrow{transition:none!important}}

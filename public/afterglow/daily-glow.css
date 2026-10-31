@@ -1,0 +1,434 @@
+/* AFTERGLOW — Daily Glow · compact glass layout · dark + icy.
+   Preserves mood-specific card images, selected fonts and selected text colors.
+   No Blade or database changes needed. */
+
+body main .ag-dg {
+  --ag-dg-ink: #fff8ff;
+  --ag-dg-plate: rgba(12, 16, 44, .82);
+  --ag-dg-tint: rgba(69, 62, 138, .20);
+  --ag-dg-heading: #f6f2ff;
+  --ag-dg-muted: #d9d9f4;
+  --ag-dg-pill-bg: rgba(19, 21, 55, .75);
+  --ag-dg-pill-ink: #f9f6ff;
+  --ag-dg-pill-border: rgba(229, 215, 255, .32);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  min-height: 0;
+  margin: 22px 0 27px;
+  border-radius: 26px;
+  border: 1px solid rgba(200, 182, 255, .38);
+  background: linear-gradient(115deg, rgba(16, 19, 55, .82), rgba(43, 29, 88, .62));
+  box-shadow: 0 16px 42px rgba(6, 8, 30, .24), inset 0 1px rgba(255, 255, 255, .10);
+  color: var(--ag-dg-heading);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  backdrop-filter: blur(20px) saturate(1.15);
+}
+
+/* Soft colored light, not a full-image solid background. */
+body main .ag-dg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 94% 2%, rgba(187, 130, 255, .20), transparent 48%),
+    radial-gradient(ellipse at 5% 100%, rgba(79, 140, 246, .13), transparent 52%);
+}
+
+body main .ag-dg .ag-dg-inner {
+  position: relative;
+  z-index: 1;
+  padding: 21px 25px 24px;
+}
+
+body main .ag-dg .ag-dg-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+body main .ag-dg .ag-dg-eyebrow,
+body main .ag-dg .ag-dg-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--ag-dg-pill-border);
+  border-radius: 999px;
+  background: var(--ag-dg-pill-bg);
+  color: var(--ag-dg-pill-ink);
+  font-weight: 850;
+  line-height: 1.3;
+}
+
+body main .ag-dg .ag-dg-eyebrow {
+  padding: 8px 13px;
+  font-size: 10px;
+  letter-spacing: .14em;
+}
+
+body main .ag-dg .ag-dg-sparkle {
+  color: #f8ca91;
+  font-size: 15px;
+}
+
+body main .ag-dg .ag-dg-date {
+  padding: 7px 12px;
+  font-size: 12px;
+  letter-spacing: .015em;
+}
+
+body main .ag-dg .ag-dg-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(18px, 3vw, 40px);
+}
+
+body main .ag-dg .ag-dg-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+}
+
+body main .ag-dg #ag-dg-title {
+  margin: 0;
+  color: var(--ag-dg-heading);
+  font-size: clamp(24px, 2.35vw, 35px);
+  font-weight: 850;
+  line-height: 1.12;
+  letter-spacing: -.025em;
+  text-shadow: none;
+}
+
+body main .ag-dg .ag-dg-subtitle {
+  margin: 10px 0 16px;
+  color: var(--ag-dg-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 600;
+  text-shadow: none;
+}
+
+body main .ag-dg .ag-dg-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid rgba(214, 202, 255, .42);
+  border-radius: 999px;
+  background: linear-gradient(120deg, rgba(115, 84, 214, .38), rgba(58, 77, 168, .32));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 7px 18px rgba(9, 9, 35, .15);
+  transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease;
+}
+
+body main .ag-dg .ag-dg-explore:hover {
+  transform: translateY(-2px);
+  background: rgba(109, 74, 205, .54);
+  box-shadow: 0 10px 24px rgba(9, 9, 35, .23);
+}
+
+body main .ag-dg .ag-dg-explore:focus-visible {
+  outline: 3px solid #f4bb70;
+  outline-offset: 3px;
+}
+
+/* The chosen mood photo belongs to the quote panel, not the entire banner. */
+body main .ag-dg .ag-dg-right {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 11px;
+  min-width: 0;
+  width: 100%;
+  min-height: 165px;
+  padding: 19px 21px;
+  border: 1px solid rgba(255, 255, 255, .30);
+  border-radius: 20px;
+  overflow: hidden;
+  background-image:
+    linear-gradient(125deg, var(--ag-dg-tint), var(--ag-dg-tint)),
+    var(--ag-dg-image, linear-gradient(125deg, #5d63a0, #aa7ebe));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 12px 28px rgba(6, 8, 36, .16), inset 0 1px rgba(255, 255, 255, .38);
+}
+
+body main .ag-dg .ag-dg-right::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, rgba(8, 14, 41, .10), transparent 70%);
+}
+
+body main .ag-dg .ag-dg-right > * {
+  position: relative;
+  z-index: 1;
+}
+
+body main .ag-dg .ag-dg-mood {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .62);
+  background: rgba(250, 252, 255, .92);
+  color: #1c315b;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .015em;
+}
+
+body main .ag-dg .ag-dg-blockquote {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+body main .ag-dg .ag-dg-text {
+  display: inline-block;
+  margin: 0;
+  padding: 11px 15px;
+  max-width: 100%;
+  max-height: 168px;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  border-radius: 13px;
+  border: 1px solid rgba(255, 255, 255, .25);
+  background: var(--ag-dg-chosen-plate, var(--ag-dg-plate)) !important;
+  color: var(--ag-dg-chosen-ink, var(--ag-dg-ink)) !important;
+  font-family: var(--ag-dg-font, "Segoe UI", Tahoma, sans-serif);
+  font-size: clamp(17px, 1.8vw, 23px);
+  font-weight: 750;
+  line-height: 1.45;
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+}
+
+body main .ag-dg .ag-dg-author {
+  display: table;
+  margin-top: 9px;
+  padding: 6px 11px;
+  border-radius: 9px;
+  background: rgba(12, 16, 44, .84);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+body main .ag-dg .ag-dg-empty {
+  max-width: 100%;
+  margin: 0;
+  padding: 12px 15px;
+  border-radius: 12px;
+  background: rgba(14, 22, 51, .80);
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+/* Mood tint = ~20%, preserving the photo's original colors. */
+body main .ag-dg[data-ag-dg-mood="Dreamy"] { --ag-dg-tint: rgba(244, 210, 245, .20); }
+body main .ag-dg[data-ag-dg-mood="Night Drive"] { --ag-dg-tint: rgba(22, 31, 72, .20); }
+body main .ag-dg[data-ag-dg-mood="Cyber"] { --ag-dg-tint: rgba(59, 108, 235, .20); }
+body main .ag-dg[data-ag-dg-mood="Love"] { --ag-dg-tint: rgba(255, 207, 227, .20); }
+body main .ag-dg[data-ag-dg-mood="Chaos"] { --ag-dg-tint: rgba(220, 128, 245, .20); }
+body main .ag-dg[data-ag-dg-mood="Deep Thoughts"] { --ag-dg-tint: rgba(168, 186, 225, .20); }
+
+/* Preserve every font selected in Quote Design Studio. */
+body main .ag-dg[data-ag-dg-font="modern"] { --ag-dg-font: "Segoe UI", Arial, Tahoma, sans-serif; }
+body main .ag-dg[data-ag-dg-font="rounded"] { --ag-dg-font: "Trebuchet MS", Tahoma, sans-serif; }
+body main .ag-dg[data-ag-dg-font="classic"] { --ag-dg-font: Georgia, "Times New Roman", Tahoma, serif; }
+body main .ag-dg[data-ag-dg-font="elegant"] { --ag-dg-font: "Palatino Linotype", "Book Antiqua", Georgia, Tahoma, serif; }
+body main .ag-dg[data-ag-dg-font="typewriter"] { --ag-dg-font: Consolas, "Courier New", Tahoma, monospace; }
+body main .ag-dg[data-ag-dg-font="arabic"] { --ag-dg-font: Tahoma, "Segoe UI", Arial, sans-serif; }
+
+/* Preserve chosen ink colors and contrast plates, including custom hex. */
+body main .ag-dg[data-ag-dg-color="navy"] { --ag-dg-chosen-ink: #182c54; --ag-dg-chosen-plate: rgba(250, 252, 255, .94); }
+body main .ag-dg[data-ag-dg-color="plum"] { --ag-dg-chosen-ink: #632b72; --ag-dg-chosen-plate: rgba(250, 252, 255, .94); }
+body main .ag-dg[data-ag-dg-color="rose"] { --ag-dg-chosen-ink: #9e365f; --ag-dg-chosen-plate: rgba(250, 252, 255, .94); }
+body main .ag-dg[data-ag-dg-color="teal"] { --ag-dg-chosen-ink: #0b666b; --ag-dg-chosen-plate: rgba(250, 252, 255, .94); }
+body main .ag-dg[data-ag-dg-color="cobalt"] { --ag-dg-chosen-ink: #2657b8; --ag-dg-chosen-plate: rgba(250, 252, 255, .96); }
+body main .ag-dg[data-ag-dg-color="white"] { --ag-dg-chosen-ink: #fff; --ag-dg-chosen-plate: rgba(8, 15, 37, .94); }
+body main .ag-dg[data-ag-dg-color="cream"] { --ag-dg-chosen-ink: #fff1d4; --ag-dg-chosen-plate: rgba(8, 15, 37, .94); }
+body main .ag-dg[data-ag-dg-color="custom"] { --ag-dg-chosen-ink: var(--ag-dg-user-ink); --ag-dg-chosen-plate: var(--ag-dg-user-plate); }
+
+/* Icy Ethereal: blue-silver frosted glass. No heavy purple background. */
+html[data-world="icy"] body main .ag-dg {
+  --ag-dg-ink: #1e3969;
+  --ag-dg-plate: rgba(250, 252, 255, .93);
+  --ag-dg-heading: #224477;
+  --ag-dg-muted: #41638c;
+  --ag-dg-pill-bg: rgba(248, 252, 255, .80);
+  --ag-dg-pill-ink: #224778;
+  --ag-dg-pill-border: rgba(150, 185, 218, .48);
+
+  border-color: rgba(255, 255, 255, .83);
+  background: linear-gradient(125deg, rgba(239, 248, 255, .84), rgba(204, 223, 245, .73));
+  box-shadow: 0 17px 42px rgba(70, 109, 155, .14), inset 0 1px rgba(255, 255, 255, .76);
+}
+
+html[data-world="icy"] body main .ag-dg::before {
+  background:
+    radial-gradient(ellipse at 100% 10%, rgba(255, 255, 255, .74), transparent 53%),
+    radial-gradient(ellipse at 0% 90%, rgba(132, 184, 234, .18), transparent 55%);
+}
+
+html[data-world="icy"] body main .ag-dg .ag-dg-sparkle { color: #498ec7; }
+
+html[data-world="icy"] body main .ag-dg .ag-dg-explore {
+  border-color: rgba(155, 191, 226, .55);
+  background: linear-gradient(125deg, rgba(186, 225, 252, .88), rgba(227, 237, 248, .94));
+  color: #204b7e;
+  box-shadow: 0 8px 20px rgba(100, 153, 200, .16);
+}
+
+html[data-world="icy"] body main .ag-dg .ag-dg-explore:hover {
+  background: rgba(183, 221, 252, .94);
+  box-shadow: 0 11px 24px rgba(100, 153, 200, .22);
+}
+
+html[data-world="icy"] body main .ag-dg .ag-dg-right {
+  border-color: rgba(255, 255, 255, .72);
+  box-shadow: 0 12px 25px rgba(71, 112, 159, .15), inset 0 1px rgba(255, 255, 255, .70);
+}
+
+html[data-world="icy"] body main .ag-dg .ag-dg-right::before {
+  background: linear-gradient(110deg, rgba(245, 250, 255, .12), transparent 78%);
+}
+
+html[data-world="icy"] body main .ag-dg[data-ag-dg-color="auto"] .ag-dg-text {
+  color: #182c54 !important;
+  background: rgba(248, 251, 255, .91) !important;
+}
+
+@media (max-width: 760px) {
+  body main .ag-dg .ag-dg-inner { padding: 18px; }
+  body main .ag-dg .ag-dg-top { margin-bottom: 13px; }
+  body main .ag-dg .ag-dg-layout { grid-template-columns: minmax(0, 1fr); gap: 17px; }
+  body main .ag-dg #ag-dg-title { font-size: clamp(22px, 6vw, 29px); }
+  body main .ag-dg .ag-dg-subtitle { margin: 8px 0 12px; }
+  body main .ag-dg .ag-dg-right { min-height: 148px; padding: 17px; }
+  body main .ag-dg .ag-dg-text { font-size: 17px; max-height: 145px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body main .ag-dg .ag-dg-explore { transition: none; }
+}
+
+
+/* v2 final alignment: center the whole section and its featured quote.
+   Keep existing mood photo, font, and user-selected color untouched. */
+body main .ag-dg {
+  max-width: 1260px;
+  width: calc(100% - 12px);
+  margin: 22px auto 30px;
+  border-radius: 26px;
+}
+body main .ag-dg .ag-dg-inner {
+  width: 100%;
+  padding: 22px clamp(20px, 3vw, 42px) 25px;
+}
+body main .ag-dg .ag-dg-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr);
+  gap: clamp(20px, 3vw, 42px);
+  align-items: center;
+}
+body main .ag-dg .ag-dg-left {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+body main .ag-dg .ag-dg-subtitle {
+  max-width: 35ch;
+  margin: 10px auto 17px;
+}
+body main .ag-dg .ag-dg-right {
+  max-width: 590px;
+  min-height: 178px;
+  margin-inline: auto;
+  padding: 20px clamp(15px, 2vw, 30px);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  border-radius: 20px;
+  /* No-mood quotes get a subtle glass tint, not an opaque purple rectangle. */
+  background-image:
+    linear-gradient(125deg, var(--ag-dg-tint), var(--ag-dg-tint)),
+    var(--ag-dg-image, linear-gradient(125deg, #344071, #55568a 58%, #675b92));
+}
+body main .ag-dg .ag-dg-blockquote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+body main .ag-dg .ag-dg-text {
+  display: block;
+  width: fit-content;
+  max-width: min(100%, 560px);
+  max-height: 160px;
+  text-align: center;
+  padding: 13px 20px;
+  margin-inline: auto;
+}
+body main .ag-dg .ag-dg-author {
+  display: inline-block;
+  margin: 11px auto 0;
+  max-width: 100%;
+}
+html[data-world="icy"] body main .ag-dg .ag-dg-right {
+  background-image:
+    linear-gradient(125deg, rgba(242, 250, 255, .18), rgba(226, 239, 255, .14)),
+    var(--ag-dg-image, linear-gradient(120deg, #d2e7fb, #ebf5ff 55%, #d8e5f3));
+  border-color: rgba(255, 255, 255, .86);
+}
+html[data-world="icy"] body main .ag-dg .ag-dg-right::before {
+  background: linear-gradient(130deg, rgba(255, 255, 255, .17), transparent 65%);
+}
+@media (max-width: 760px) {
+  body main .ag-dg {
+    width: 100%;
+    margin: 18px auto 25px;
+  }
+  body main .ag-dg .ag-dg-inner { padding: 18px; }
+  body main .ag-dg .ag-dg-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  body main .ag-dg .ag-dg-right {
+    min-height: 142px;
+    width: 100%;
+    padding: 17px;
+  }
+  body main .ag-dg .ag-dg-text {
+    font-size: 17px;
+    max-height: 145px;
+  }
+}

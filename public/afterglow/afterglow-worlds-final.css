@@ -1,0 +1,201 @@
+/* AFTERGLOW — FINAL TWO WORLDS (self-contained CSS + included local photos).
+   Include ONCE, after afterglow.css, in resources/views/Layout/app.blade.php.
+   Dark Cyber Night: original magenta/purple city photograph.
+   Light Icy Ethereal: original icy blue photograph + platinum/silver highlights.
+   No Laravel controllers, routes, databases or other features are modified. */
+:root {
+  --ag-hero-image: url('/afterglow/hero-cyber-night.jpg');
+  --ag-world-image: url('/afterglow/hero-cyber-night.jpg');
+}
+html[data-world="icy"] {
+  --ag-hero-image: url('/afterglow/hero-icy-ethereal.jpg');
+  --ag-world-image: url('/afterglow/hero-icy-ethereal.jpg');
+}
+/* Keep image itself vivid, soften only where the text lives. */
+.ag-hero {
+  background-image:
+    linear-gradient(90deg, rgba(6,8,31,.91) 0%, rgba(8,8,30,.78) 28%, rgba(12,10,38,.48) 57%, rgba(12,10,38,.12) 100%),
+    var(--ag-hero-image) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  min-height: clamp(430px, 39vw, 540px);
+}
+html[data-world="icy"] .ag-hero {
+  background-image:
+    linear-gradient(90deg, rgba(235,248,255,.96) 0%, rgba(226,243,255,.83) 36%, rgba(226,243,255,.40) 66%, rgba(237,247,255,.09) 100%),
+    var(--ag-hero-image) !important;
+}
+/* Make the large world background subtle so quote cards remain the focus. */
+body::before {
+  background-image:linear-gradient(180deg,rgba(5,7,23,.6),var(--ag-bg) 80%),var(--ag-world-image) !important;
+  background-position:center top !important;
+  background-size:cover !important;
+  opacity:.15 !important;
+}
+html[data-world="icy"] body::before {
+  background-image:linear-gradient(180deg,rgba(242,248,255,.54),var(--ag-bg) 82%),var(--ag-world-image) !important;
+  opacity:.11 !important;
+}
+@media(max-width:800px) {
+  .ag-hero {background-position: 59% center !important; min-height:390px; }
+  html[data-world="icy"] .ag-hero {background-position: 55% center !important;}
+}
+
+
+/* AFTERGLOW — Icy Ethereal / PURE BLUE accents.
+   Scoped to icy: keeps Cyber Night as-is and preserves existing photo backgrounds. */
+html[data-world="icy"] {
+  --ag-primary: #67c9ff;
+  --ag-primary-ink: #0d3760;
+  --ag-secondary: #218bd6;
+  --ag-border: rgba(76, 160, 218, .34);
+  --ag-glow: rgba(66, 175, 244, .24);
+}
+
+/* Navbar logo: navy > cool blue > ice blue, without purple/pink. */
+html[data-world="icy"] body nav .site-name {
+  background: linear-gradient(110deg, #193c79 4%, #367bd4 52%, #76d8ff 98%) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: none !important;
+}
+
+/* Main hero title follows the same pure-blue palette. */
+html[data-world="icy"] .ag-hero h1 {
+  background-image: linear-gradient(110deg, #173e80 0%, #2978d2 55%, #5ac7fb 100%) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: none !important;
+  filter: drop-shadow(0 3px 12px rgba(54, 121, 196, .12));
+}
+
+/* Light-world accents and buttons: icy aqua, cobalt and sky blue. */
+html[data-world="icy"] .ag-hero .ag-eyebrow,
+html[data-world="icy"] .ag-hero::after {
+  color: #0879c2 !important;
+}
+html[data-world="icy"] .ag-hero-actions a:first-child {
+  background: linear-gradient(120deg, #7bd8ff, #d2f4ff) !important;
+  border-color: rgba(62, 150, 215, .40) !important;
+  color: #0a355d !important;
+  box-shadow: 0 6px 24px rgba(75, 175, 240, .22) !important;
+}
+html[data-world="icy"] .ag-world-toggle {
+  border-color: rgba(58, 147, 213, .36) !important;
+  box-shadow: 0 4px 19px rgba(74, 169, 237, .14) !important;
+}
+html[data-world="icy"] .ag-toggle-orb {
+  background: linear-gradient(135deg, #b8f5ff, #439fed) !important;
+  box-shadow: 0 0 15px rgba(83, 180, 244, .37) !important;
+}
+
+/* AFTERGLOW — Icy Ethereal: subtle platinum silver / ice-blue accents.
+   This entire section is scoped to data-world=icy, so Cyber Night is unchanged.
+   Metallic silver appears as highlights rather than a gray theme. */
+html[data-world="icy"] {
+  --ag-secondary: #61b8ed;
+  --ag-border: rgba(156, 178, 198, .48);
+  --ag-glow: rgba(127, 190, 220, .23);
+}
+
+/* Frosted-silver navbar. Keep the existing partner logos and layout. */
+html[data-world="icy"] body nav {
+  background: linear-gradient(105deg, rgba(247, 252, 255, .87), rgba(226, 241, 249, .84) 65%, rgba(235, 242, 248, .88)) !important;
+  border-bottom: 1px solid rgba(156, 178, 196, .64) !important;
+  box-shadow: 0 2px 0 rgba(255,255,255,.72) inset, 0 12px 30px rgba(62,108,144,.09) !important;
+}
+
+/* Navy -> icy blue -> soft platinum -> blue: silver glint, not a purple tint. */
+html[data-world="icy"] body nav .site-name {
+  background-image: linear-gradient(110deg,
+    #183f79 0%, #367ebb 32%, #87a8ba 51%,
+    #dce6eb 62%, #4c9dc9 79%, #1c5486 100%) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 1px 0 rgba(29,80,131,.19));
+}
+html[data-world="icy"] body nav .site-name::after {
+  color: #a7bfce !important;
+  -webkit-text-fill-color: #a7bfce !important;
+  text-shadow: 0 0 8px rgba(255,255,255,.9) !important;
+}
+
+/* Large AFTERGLOW title: mostly blue with a fine chrome highlight. */
+html[data-world="icy"] .ag-hero h1 {
+  background-image: linear-gradient(110deg,
+    #173f76 0%, #287cc1 33%, #9bb8c9 50%,
+    #e2ebf0 61%, #3f91c9 78%, #174b80 100%) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: #194d84 !important;
+  -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: .3px rgba(32, 87, 136, .35);
+  filter: drop-shadow(0 2px 9px rgba(57, 120, 168, .15));
+}
+
+/* A satin chrome rim on the hero rather than a shiny sheet over the photo. */
+html[data-world="icy"] .ag-hero {
+  border-bottom-color: rgba(171, 192, 207, .72) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.42), inset 0 -2px rgba(255,255,255,.22);
+}
+html[data-world="icy"] .ag-hero::after {
+  color: #afc5d2 !important;
+  text-shadow: 0 0 12px #fff, 0 0 24px rgba(89,182,230,.5) !important;
+}
+
+/* Hero primary: icy-blue and pale silver; secondary: frosted chrome glass. */
+html[data-world="icy"] .ag-hero-actions a:first-child {
+  background: linear-gradient(120deg,
+    #8dd5ff 0%, #c6e9fb 38%, #eff5f8 61%, #99d7f5 100%) !important;
+  border: 1px solid rgba(148, 174, 193, .75) !important;
+  color: #123b68 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9),
+    0 7px 22px rgba(79, 150, 202, .21) !important;
+}
+html[data-world="icy"] .ag-hero-actions a:not(:first-child) {
+  background: linear-gradient(120deg,
+    rgba(255,255,255,.90), rgba(216,231,241,.86)) !important;
+  border: 1px solid rgba(153, 177, 194, .72) !important;
+  color: #194675 !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.85),
+    0 5px 16px rgba(79, 130, 166, .13) !important;
+}
+
+/* Theme switch and its glass/metal orb. */
+html[data-world="icy"] .ag-world-toggle {
+  background: linear-gradient(125deg, rgba(252,254,255,.96), rgba(215,230,241,.91)) !important;
+  border: 1px solid rgba(151,176,195,.76) !important;
+  color: #153d6c !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.95),
+    0 5px 18px rgba(86,141,183,.15) !important;
+}
+html[data-world="icy"] .ag-toggle-orb {
+  background: radial-gradient(circle at 30% 25%, #ffffff 0%, #e7f1f8 25%,
+    #a4c1d4 48%, #65b7eb 75%, #3c8fc9 100%) !important;
+  border: 1px solid rgba(139,169,193,.68);
+  box-shadow: inset 0 1px 2px #ffffff, 0 0 13px rgba(100,177,229,.45) !important;
+}
+
+/* Avoid unwanted motion for visitors who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-world="icy"] .ag-hero-actions a { transition: none !important; }
+}
+
+/* Finish: world-specific hero readability and reliable photo framing. */
+html:not([data-world="icy"]) .ag-hero .ag-hero-inner {
+  text-shadow: 0 1px 9px rgba(3, 6, 24, .2);
+}
+html[data-world="icy"] .ag-hero .ag-hero-inner {
+  text-shadow: 0 1px 8px rgba(255, 255, 255, .20);
+}
+html[data-world="icy"] .ag-hero p:not(.ag-hero-desc) { color: #173d70 !important; }
+html[data-world="icy"] .ag-hero .ag-hero-desc { color: #315979 !important; }
+html[data-world="icy"] .ag-hero .ag-eyebrow { color: #2474aa !important; }
+@media (max-width: 650px) {
+  .ag-hero { background-position: 59% center !important; min-height: 380px; }
+  html[data-world="icy"] .ag-hero { background-position: 57% center !important; }
+}
