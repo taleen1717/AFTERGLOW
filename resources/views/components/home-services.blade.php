@@ -7,6 +7,7 @@
             <p class="ag-hub-eyebrow"><span aria-hidden="true">✦</span> YOUR CREATIVE UNIVERSE</p>
             <h2 id="ag-hub-heading">Everything you love, <em>in one place.</em></h2>
             <p class="ag-hub-intro">Words, sounds, art and code — explore your own corner of AFTERGLOW.</p>
+            <a href="{{ route('soundtrack.discover') }}" class="ag-v2-home-music">♫ Explore the Community Soundtrack ↗</a>
         </div>
         <span class="ag-hub-heading-mark" aria-hidden="true">✳&nbsp; 5 SPACES &nbsp;✳</span>
     </header>

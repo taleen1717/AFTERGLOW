@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset('afterglow/afterglow.css') }}">
     <link rel="stylesheet" href="{{ asset('afterglow/soundtrack-spotlight.css') }}">
     <link rel="stylesheet" href="{{ asset('afterglow/afterglow-worlds-final.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('afterglow/social-v2.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('afterglow/ui-refinement-v3.css') }}?v=1">
 <link rel="stylesheet" href="{{ asset('afterglow/auth-worlds-motion.css') }}?v=6">
 </head>
 

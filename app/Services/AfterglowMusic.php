@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
@@ -91,35 +92,128 @@ class AfterglowMusic
         return true;
     }
 
-    public function spotifyFromUrl(string $submitted, string $fallbackTitle, string $fallbackArtist): array
+    /**
+     * Accept official Spotify CDN images only. The URL comes from Spotify APIs,
+     * not from a user-controlled image field.
+     */
+    private function spotifyArtworkUrl(mixed $candidate): ?string
     {
-        // Parse and reconstruct ONLY an official Spotify URL. No arbitrary fetch/SSRF.
+        if (!is_string($candidate) || strlen($candidate) > 2048) {
+            return null;
+        }
+        $parts = parse_url($candidate);
+        if (!is_array($parts) || strtolower($parts['scheme'] ?? '') !== 'https'
+            || isset($parts['user']) || isset($parts['pass']) || isset($parts['port'])) {
+            return null;
+        }
+        $host = strtolower($parts['host'] ?? '');
+        if ($host === 'i.scdn.co' || $host === 'mosaic.scdn.co'
+            || preg_match('/^image-cdn-[a-z0-9-]+\.spotifycdn\.com$/', $host)) {
+            return $candidate;
+        }
+        return null;
+    }
+
+    /**
+     * Public title and artwork via oEmbed; accurate artist and album artwork
+     * via Spotify Web API when server credentials are configured.
+     */
+    public function spotifyMetadata(string $submitted): array
+    {
         $parts = parse_url(trim($submitted));
+        if (!is_array($parts)) {
+            throw ValidationException::withMessages(['spotify_url' => 'Paste a valid Spotify Share URL.']);
+        }
         $host = strtolower($parts['host'] ?? '');
         $path = $parts['path'] ?? '';
-        if (($parts['scheme'] ?? '') !== 'https' || $host !== 'open.spotify.com' ||
-            !preg_match('~^/(?:intl-[a-z]{2,5}/)?(track|album|playlist|artist|episode|show)/([A-Za-z0-9]{8,64})/?$~i', $path, $m)) {
-            throw ValidationException::withMessages(['spotify_url' => 'Paste a full open.spotify.com track, album, playlist, artist, or podcast link.']);
+        if (strtolower($parts['scheme'] ?? '') !== 'https' || $host !== 'open.spotify.com'
+            || isset($parts['user']) || isset($parts['pass']) || isset($parts['port'])
+            || !preg_match('~^/(?:intl-[a-z]{2,5}/)?(track|album|playlist|artist|episode|show)/([A-Za-z0-9]{8,64})/?$~i', $path, $matches)) {
+            throw ValidationException::withMessages([
+                'spotify_url' => 'Paste a full open.spotify.com track, album, playlist, artist, or podcast link.',
+            ]);
         }
-        $kind = strtolower($m[1]);
-        $url = 'https://open.spotify.com/' . $kind . '/' . $m[2];
-        $title = $fallbackTitle;
-        $artist = $fallbackArtist;
-        $art = null;
+
+        $kind = strtolower($matches[1]);
+        $id = $matches[2];
+        $url = 'https://open.spotify.com/' . $kind . '/' . $id;
+        $result = [
+            'url' => $url, 'kind' => $kind, 'title' => null,
+            'artist' => null, 'artwork_url' => null,
+        ];
+
+        // Spotify oEmbed usually supplies public title/thumbnail with no API credentials.
         try {
-            $r = Http::timeout(8)->get('https://open.spotify.com/oembed', ['url' => $url]);
-            if ($r->successful()) {
-                $title = (string) ($r->json('title') ?: $title);
-                $art = $r->json('thumbnail_url');
-                if (!is_string($art) || !str_starts_with($art, 'https://i.scdn.co/')) $art = null;
+            $response = Http::timeout(8)->get('https://open.spotify.com/oembed', ['url' => $url]);
+            if ($response->successful()) {
+                $title = $response->json('title');
+                if (is_string($title) && trim($title) !== '') {
+                    $result['title'] = mb_substr(trim($title), 0, 120);
+                }
+                // Accept the official CDN domains Spotify may use for artwork.
+                $result['artwork_url'] = $this->spotifyArtworkUrl($response->json('thumbnail_url'));
             }
-        } catch (\Throwable $e) {
-            // Spotify's playlist oEmbed availability can vary. The official embed still works.
-            report($e);
+        } catch (\Throwable $exception) {
+            report($exception);
         }
+
+        // IMPORTANT: use the same config keys as SpotifyMetadataController.
+        $clientId = trim((string) config('services.spotify.client_id', ''));
+        $clientSecret = trim((string) config('services.spotify.client_secret', ''));
+        if ($kind === 'track' && $clientId !== '' && $clientSecret !== '') {
+            try {
+                $token = Cache::remember(
+                    'ag:spotify:token:' . hash('sha256', $clientId),
+                    now()->addMinutes(45),
+                    function () use ($clientId, $clientSecret): ?string {
+                        $response = Http::asForm()->withBasicAuth($clientId, $clientSecret)
+                            ->timeout(8)->post('https://accounts.spotify.com/api/token', [
+                                'grant_type' => 'client_credentials',
+                            ]);
+                        return $response->successful() ? $response->json('access_token') : null;
+                    }
+                );
+                if (is_string($token) && $token !== '') {
+                    $response = Http::withToken($token)->timeout(8)
+                        ->get('https://api.spotify.com/v1/tracks/' . $id);
+                    if ($response->successful()) {
+                        $name = $response->json('name');
+                        $artists = collect($response->json('artists', []))
+                            ->pluck('name')->filter(fn ($name) => is_string($name) && trim($name) !== '')
+                            ->implode(', ');
+                        if (is_string($name) && trim($name) !== '') {
+                            $result['title'] = mb_substr(trim($name), 0, 120);
+                        }
+                        if ($artists !== '') {
+                            $result['artist'] = mb_substr($artists, 0, 120);
+                        }
+                        // Prefer the track's official album cover from the Web API.
+                        $apiArtwork = $this->spotifyArtworkUrl($response->json('album.images.0.url'));
+                        if ($apiArtwork !== null) {
+                            $result['artwork_url'] = $apiArtwork;
+                        }
+                    }
+                }
+            } catch (\Throwable $exception) {
+                report($exception);
+            }
+        }
+
+        return $result;
+    }
+
+    public function spotifyFromUrl(string $submitted, string $fallbackTitle, string $fallbackArtist): array
+    {
+        $metadata = $this->spotifyMetadata($submitted);
+        // Respect user-entered or auto-filled values, including their corrections.
+        $title = trim($fallbackTitle) !== '' ? $fallbackTitle : ($metadata['title'] ?: 'Spotify favorite');
+        $artist = trim($fallbackArtist) !== '' ? $fallbackArtist : ($metadata['artist'] ?: 'Spotify');
         return [
-            'title' => mb_substr($title, 0, 120), 'artist' => mb_substr($artist, 0, 120),
-            'url' => $url, 'artwork_url' => $art, 'platform' => 'spotify',
+            'title' => mb_substr($title, 0, 120),
+            'artist' => mb_substr($artist, 0, 120),
+            'url' => $metadata['url'],
+            'artwork_url' => $metadata['artwork_url'],
+            'platform' => 'spotify',
         ];
     }
 }

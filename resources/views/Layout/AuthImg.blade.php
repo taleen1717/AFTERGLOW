@@ -1,6 +1,7 @@
 @extends('Layout.app')
 
 @section('content')
+<div class="ag-auth-navigation"><a href="{{ route('home') }}" class="ag-auth-back">← Back to AFTERGLOW</a></div>
 <div class="grid h-full grid-cols-1 md:grid-cols-2">
 
     @yield('form')

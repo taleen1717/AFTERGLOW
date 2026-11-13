@@ -3,7 +3,6 @@
 <nav class="relative sticky top-0 z-50 border-b border-white/30 bg-[#10081F] shadow-sm backdrop-blur-md">
     <p class="site-name">QuoteIt</p>
     <ul class="mx-auto flex max-w-7xl items-center gap-6 px-4 py-1">
-
         @if (($page ?? '') === 'Sign Up')
         <li><a href="/login" class="btn-primary">Log In</a></li>
         @elseif(($page ?? '') === 'Log In')
@@ -15,14 +14,14 @@
             <li><button type="submit" class="btn-primary">Log Out</button></li>
         </form>
         <li>
-            <a href="/profile"
+            <a href="{{ route('profile.show') }}"
                 class="block rounded-full focus:outline-none focus-visible:ring-4 focus-visible:ring-tuwaiq-purple/30">
-                <img src="{{ asset('images/profile.jpeg') }}" alt="Profile"
+                <img src="{{ auth()->user()->avatar_path ? route('users.avatar', auth()->user()) : asset('images/profile.jpeg') }}" alt="Profile"
                     class="h-10 w-10 rounded-full object-cover ring-2 ring-tuwaiq-purple ring-offset-2 transition hover:scale-105">
             </a>
         </li>
         <li>
-            <p class="text-white">{{auth()->user()->name}} </p>
+            <a href="{{ route('profile.show') }}" class="ag-nav-profile-name">{{ auth()->user()->name }} <span>✎</span></a>
         </li>
         @endauth
         @guest

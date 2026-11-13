@@ -9,8 +9,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\FavoriteSongController;
 use App\Http\Controllers\MusicDiscoveryController;
 use App\Http\Controllers\VisualBoardController;
+use App\Http\Controllers\SocialController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', [QuoteController::class, 'index'])->name('home');
+Route::get('/users/{user}/avatar', [ProfileController::class, 'image'])->name('users.avatar');
+Route::get('/soundtrack/discover', [FavoriteSongController::class, 'discover'])->name('soundtrack.discover');
 
 Route::get('/signup', [function () {
     return view('Authentication.SignUp', ['page'=>'Sign Up']);
@@ -30,6 +34,27 @@ Route::put('/quote/{quote}', [QuoteController::class, 'update'])->name('edit_quo
 Route::delete('/quote/{quote}', [QuoteController::class, 'destroy'])->name('delete_quote');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/avatar', [ProfileController::class, 'avatar'])->middleware('throttle:5,1')->name('profile.avatar');
+    Route::delete('/profile/avatar', [ProfileController::class, 'removeAvatar'])->name('profile.avatar.remove');
+    Route::patch('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
+
+    Route::post('/quotes/{quote}/like', [SocialController::class, 'quoteLike'])->middleware('throttle:30,1')->name('quotes.like');
+    Route::post('/quotes/{quote}/comments', [SocialController::class, 'quoteComment'])->middleware('throttle:12,1')->name('quotes.comments.store');
+    Route::delete('/quote-comments/{comment}', [SocialController::class, 'deleteQuoteComment'])->name('quotes.comments.destroy');
+    Route::post('/boards/{visualBoard}/like', [SocialController::class, 'boardLike'])->middleware('throttle:30,1')->name('boards.like');
+    Route::post('/boards/{visualBoard}/comments', [SocialController::class, 'boardComment'])->middleware('throttle:12,1')->name('boards.comments.store');
+    Route::delete('/board-comments/{comment}', [SocialController::class, 'deleteBoardComment'])->name('boards.comments.destroy');
+
+    Route::post('/code-exchange/{codeSnippet}/like', [SocialController::class, 'codeLike'])->middleware('throttle:30,1')->name('code-exchange.like');
+    Route::post('/code-exchange/{codeSnippet}/comments', [SocialController::class, 'codeComment'])->middleware('throttle:12,1')->name('code-exchange.comments.store');
+    Route::delete('/code-comments/{comment}', [SocialController::class, 'deleteCodeComment'])->name('code-exchange.comments.destroy');
+
+    Route::post('/soundtrack/public/{favoriteSong}/like', [SocialController::class, 'songLike'])->middleware('throttle:30,1')->name('soundtrack.public.like');
+    Route::post('/soundtrack/public/{favoriteSong}/comments', [SocialController::class, 'songComment'])->middleware('throttle:12,1')->name('soundtrack.public.comments.store');
+    Route::delete('/song-comments/{comment}', [SocialController::class, 'deleteSongComment'])->name('soundtrack.public.comments.destroy');
+
     Route::get('/soundtrack', [FavoriteSongController::class, 'index'])->name('soundtrack.index');
 
     Route::post('/soundtrack', [FavoriteSongController::class, 'store'])->name('soundtrack.store');
@@ -39,6 +64,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/soundtrack/{favoriteSong}', [FavoriteSongController::class, 'destroy'])->name('soundtrack.destroy');
 
     Route::patch('/soundtrack/{favoriteSong}/repeat', [FavoriteSongController::class, 'repeat'])->name('soundtrack.repeat');
+
+    Route::get('/soundtrack/spotify-metadata', \App\Http\Controllers\SpotifyMetadataController::class)
+        ->middleware('throttle:12,1')->name('soundtrack.spotify-metadata');
 
     Route::get('/soundtrack/youtube-search', [MusicDiscoveryController::class, 'youtube'])
     ->middleware('throttle:20,1')

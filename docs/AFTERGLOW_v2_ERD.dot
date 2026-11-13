@@ -1,0 +1,29 @@
+digraph AFTERGLOW {
+  graph [label="AFTERGLOW v2  |  Core database relationships", labelloc=t, fontsize=22, fontname="Helvetica-Bold", fontcolor="#482265", bgcolor="white", pad="0.35", nodesep="0.55", ranksep="0.9", splines=polyline, outputorder=edgesfirst];
+  node [shape=record, fontname="Helvetica", fontsize=11, style="filled", color="#a789bc", fillcolor="#f9f4fc", margin="0.16,0.12"];
+  edge [fontname="Helvetica", fontsize=9, color="#8c6aa0", arrowsize=0.7];
+  users [label="{USERS|PK id\lname\lemail (unique)\lbio (new)\lavatar_path (new)\lpassword (hashed)\l}", fillcolor="#e7d6f4"];
+  quotes [label="{QUOTES|PK id\luser_id (logical link)\lcontent\lmood / card_style\ltext_font / text_color\l}"];
+  visual_boards [label="{VISUAL_BOARDS|PK id\lFK user_id\ltitle / description\lmood / image_path\l}"];
+  favorite_songs [label="{FAVORITE_SONGS|PK id\lFK user_id\lFK quote_id (nullable)\ltitle / artist / url\lmood / platform\lis_public (new, default false)\l}"];
+  code_snippets [label="{CODE_SNIPPETS|PK id\lFK user_id\ltitle / language / code\l}"];
+  quote_likes [label="{QUOTE_LIKES (new)|PK id\lFK quote_id\lFK user_id\lUNIQUE (quote_id, user_id)\l}", fillcolor="#e5f3fb"];
+  quote_comments [label="{QUOTE_COMMENTS (new)|PK id\lFK quote_id\lFK user_id\lbody\l}", fillcolor="#e5f3fb"];
+  board_likes [label="{BOARD_LIKES (new)|PK id\lFK visual_board_id\lFK user_id\lUNIQUE (visual_board_id, user_id)\l}", fillcolor="#e5f3fb"];
+  board_comments [label="{BOARD_COMMENTS (new)|PK id\lFK visual_board_id\lFK user_id\lbody\l}", fillcolor="#e5f3fb"];
+  users -> quotes [label="1 : many  (logical; no FK constraint)", style=dashed];
+  users -> visual_boards [label="1 : many"];
+  users -> favorite_songs [label="1 : many"];
+  users -> code_snippets [label="1 : many"];
+  quotes -> favorite_songs [label="1 : many (optional)"];
+  users -> quote_likes;
+  users -> quote_comments;
+  users -> board_likes;
+  users -> board_comments;
+  quotes -> quote_likes;
+  quotes -> quote_comments;
+  visual_boards -> board_likes;
+  visual_boards -> board_comments;
+
+
+}

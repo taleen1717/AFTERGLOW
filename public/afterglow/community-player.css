@@ -1,0 +1,30 @@
+/* AFTERGLOW v3 — official embedded playback in Community Soundtrack.
+   Intentionally scoped; existing private music, comments and reactions stay unchanged. */
+.ag-v2-song-card { overflow: hidden; }
+.ag-v2-song-card .ag-community-service { display:block; font-size:.79rem; font-weight:650; opacity:.83; margin-top:7px; }
+.ag-v2-song-card .ag-community-actions { margin: 15px 0 0; }
+.ag-v2-song-card .ag-community-player { border:1px solid rgba(236,173,255,.28); background:rgba(39,22,69,.55); border-radius:15px; overflow:hidden; }
+.ag-v2-song-card .ag-community-play-toggle { cursor:pointer; display:flex; align-items:center; gap:12px; padding:12px 14px; font-weight:800; font-size:.92rem; color:#f8edff; list-style:none; transition:background .15s ease; }
+.ag-v2-song-card .ag-community-play-toggle::-webkit-details-marker { display:none; }
+.ag-v2-song-card .ag-community-play-toggle::marker { content:''; }
+.ag-v2-song-card .ag-community-play-toggle:hover { background:rgba(201,117,238,.14); }
+.ag-v2-song-card .ag-community-play-toggle:focus-visible {outline:2px solid #ffc2f0;outline-offset:-3px}
+.ag-v2-song-card .ag-community-play-icon {width:29px;height:29px;display:grid;place-items:center;border-radius:50%;color:#1b0d30;background:linear-gradient(135deg,#ff6fce,#b797f5);font-size:12px;padding-left:2px;flex:none}
+.ag-v2-song-card .ag-community-play-chevron { margin-left:auto;font-size:1.3rem;transition:transform .15s ease;opacity:.85 }
+.ag-v2-song-card .ag-community-player[open] .ag-community-play-chevron {transform:rotate(180deg)}
+.ag-v2-song-card .ag-community-player-content {padding:0 12px 12px}
+.ag-v2-song-card .ag-community-embed {overflow:hidden;background:#08071a;border-radius:12px;position:relative}
+.ag-v2-song-card .ag-community-embed.is-youtube {aspect-ratio:16 / 9;min-height:220px}
+.ag-v2-song-card .ag-community-embed.is-spotify {height:232px}
+.ag-v2-song-card .ag-community-embed iframe {width:100%;height:100%;display:block;border:0}
+.ag-v2-song-card .ag-community-player-note {font-size:.79rem;line-height:1.6;margin:10px 3px 0;opacity:.9}
+.ag-v2-song-card .ag-community-player-note a {display:inline;font-size:inherit;white-space:normal;text-decoration:underline;text-underline-offset:3px}
+.ag-v2-song-card .ag-community-unavailable {padding:12px 14px;margin:0;border:1px solid rgba(236,173,255,.25);border-radius:12px}
+.ag-v2-song-card .ag-social {margin-top:12px}
+html[data-world="icy"] .ag-v2-song-card .ag-community-player {background:rgba(219,239,253,.58);border-color:#a6cae5}
+html[data-world="icy"] .ag-v2-song-card .ag-community-play-toggle {color:#17436e}
+html[data-world="icy"] .ag-v2-song-card .ag-community-play-toggle:hover {background:rgba(97,164,220,.14)}
+html[data-world="icy"] .ag-v2-song-card .ag-community-play-icon {background:linear-gradient(135deg,#c2efff,#85bde9);color:#17436e}
+html[data-world="icy"] .ag-v2-song-card .ag-community-unavailable {border-color:#a6cae5}
+@media(max-width:700px) { .ag-v2-song-card .ag-community-embed.is-youtube {min-height:0} }
+@media(prefers-reduced-motion:reduce) { .ag-v2-song-card .ag-community-play-toggle,.ag-v2-song-card .ag-community-play-chevron {transition:none} }

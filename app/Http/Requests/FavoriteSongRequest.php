@@ -13,6 +13,7 @@ class FavoriteSongRequest extends FormRequest
     {
         $base = [
             'mood' => ['required', Rule::in(FavoriteSong::MOODS)],
+            'is_public' => ['required', 'boolean'],
             'quote_id' => ['nullable', 'integer', Rule::exists('quotes', 'id')->where('user_id', $this->user()->id)],
         ];
         if (!$this->isMethod('post')) {

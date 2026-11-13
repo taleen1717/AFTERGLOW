@@ -153,6 +153,7 @@
                                 </div>
                             @endif
                         </div>
+                        <x-social-actions :item="$snippet" kind="code" />
                     </article>
                 @endforeach
             </div>

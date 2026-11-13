@@ -1,0 +1,235 @@
+/* AFTERGLOW v3 · UI refinement for Visual Boards, Code Exchange and navigation.
+   Additive, scoped styling only. No forms, database tables or routes are changed. */
+
+/* A clearly visible HOME destination on every non-home page. */
+body nav .ag-nav-home-item { flex: 0 0 auto; list-style: none; }
+body nav a.ag-nav-home-link {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  min-height: 42px; padding: 9px 17px;
+  color: #17112e !important; text-decoration: none !important;
+  background: linear-gradient(115deg, #ff91e6 0%, #c8a6fa 100%);
+  border: 1px solid rgba(255,255,255,.32); border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(232,95,220,.22);
+  font-size: 13px; font-weight: 850; letter-spacing: .01em;
+  transition: transform .16s ease, filter .16s ease;
+}
+body nav .ag-nav-home-link span { font-size: 20px; line-height: 14px; font-weight: 900; }
+body nav .ag-nav-home-link:hover { transform: translateY(-1px); filter: brightness(1.07); }
+body nav .ag-nav-home-link:focus-visible { outline: 3px solid #a5e2ff; outline-offset: 3px; }
+html[data-world="icy"] body nav a.ag-nav-home-link {
+  background: linear-gradient(120deg, #7bc9fa, #d7f4ff);
+  color: #133b65 !important; border-color: rgba(47,122,183,.28);
+  box-shadow: 0 4px 16px rgba(56,136,183,.17);
+}
+/* Secondary Back links become real, discoverable buttons. */
+.ag-boards-page .ag-boards-topline > a,
+.ag-ce-page .ag-ce-topline > a,
+.ag-soundtrack-shell .ag-music-links > a:first-child,
+.ag-v2-shell a.ag-v2-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 39px; padding: 9px 15px; border-radius: 999px;
+  color: #fcf3ff !important; font-size: 12px; font-weight: 850;
+  text-decoration: none !important; letter-spacing: .015em; text-transform: none;
+  border: 1px solid rgba(255,192,246,.52);
+  background: rgba(97,38,125,.70);
+  box-shadow: 0 4px 18px rgba(12,5,37,.18);
+  transition: transform .18s ease, background .18s ease;
+}
+.ag-boards-page .ag-boards-topline > a:hover,
+.ag-ce-page .ag-ce-topline > a:hover,
+.ag-soundtrack-shell .ag-music-links > a:first-child:hover,
+.ag-v2-shell a.ag-v2-back:hover { transform: translateY(-2px); background: rgba(136,57,164,.89); }
+html[data-world="icy"] .ag-boards-page .ag-boards-topline > a,
+html[data-world="icy"] .ag-ce-page .ag-ce-topline > a,
+html[data-world="icy"] .ag-soundtrack-shell .ag-music-links > a:first-child,
+html[data-world="icy"] .ag-v2-shell a.ag-v2-back {
+  background: rgba(232,249,255,.96); border-color: rgba(48,121,176,.49);
+  color: #185681 !important; box-shadow: 0 5px 14px rgba(46,130,189,.10);
+}
+html[data-world="icy"] .ag-boards-page .ag-boards-topline > a:hover,
+html[data-world="icy"] .ag-ce-page .ag-ce-topline > a:hover,
+html[data-world="icy"] .ag-soundtrack-shell .ag-music-links > a:first-child:hover,
+html[data-world="icy"] .ag-v2-shell a.ag-v2-back:hover { background: #d1ecff; }
+
+/* Visual Boards: editorial gallery / Polaroid-inspired glass cards. */
+.ag-boards-page .ag-board-grid { gap: 23px; }
+.ag-boards-page .ag-board-card {
+  display: flex; flex-direction: column; overflow: hidden;
+  border-radius: 23px; border: 1px solid rgba(238,173,255,.42);
+  background: linear-gradient(155deg,rgba(39,26,77,.97),rgba(12,17,49,.96));
+  box-shadow: 0 13px 32px rgba(3,3,23,.29), 0 0 0 1px rgba(255,255,255,.04) inset;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.ag-boards-page .ag-board-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(5,3,30,.31), 0 0 24px rgba(242,110,226,.10);
+}
+.ag-boards-page .ag-board-card .ag-board-art {
+  aspect-ratio: 4 / 4.4;
+  border-bottom: 1px solid rgba(244,204,255,.19);
+}
+.ag-boards-page .ag-board-card:nth-child(3n+2) .ag-board-art { aspect-ratio: 4 / 4; }
+.ag-boards-page .ag-board-card:nth-child(3n) .ag-board-art { aspect-ratio: 4 / 4.8; }
+.ag-boards-page .ag-board-card .ag-board-art img { filter: saturate(1.08); }
+.ag-boards-page .ag-board-card .ag-board-info { padding: 18px 18px 15px; flex: 1 1 auto; }
+.ag-boards-page .ag-board-card .ag-board-info h3 { font-size: clamp(20px,2vw,24px); line-height: 1.23; letter-spacing: -.015em; }
+.ag-boards-page .ag-board-card .ag-board-meta { align-items: center; line-height: 1.45; }
+.ag-boards-page .ag-board-card .ag-board-meta > span { min-width: 0; overflow-wrap: anywhere; }
+/* The original CSS forces Edit to take a whole row and Delete to come first. */
+.ag-boards-page .ag-board-card .ag-board-owner {
+  display: flex; flex-wrap: wrap; gap: 9px;
+  align-items: flex-start; justify-content: flex-start;
+  margin-top: 16px;
+}
+.ag-boards-page .ag-board-card .ag-board-edit { flex: 0 0 auto; order: 0; margin: 0; }
+.ag-boards-page .ag-board-card .ag-board-owner > form { order: 1; margin: 0; }
+.ag-boards-page .ag-board-card .ag-board-edit > summary,
+.ag-boards-page .ag-board-card button.ag-board-delete {
+  display: inline-flex; justify-content: center; align-items: center;
+  min-width: 78px; min-height: 38px; padding: 8px 13px;
+  border-radius: 12px; font-size: 12px; font-weight: 750;
+  border: 1px solid rgba(214,174,255,.45); box-sizing: border-box;
+}
+.ag-boards-page .ag-board-card .ag-board-edit > summary {
+  background: rgba(139,104,230,.17); color: #eee5ff;
+}
+.ag-boards-page .ag-board-card button.ag-board-delete {
+  background: rgba(247,82,152,.075); border-color: rgba(247,115,171,.34); color: #ffafe1;
+}
+.ag-boards-page .ag-board-card .ag-board-edit[open] {
+  flex: 1 0 100%; order: 2; min-width: 0;
+}
+.ag-boards-page .ag-board-card .ag-board-edit[open] .ag-board-edit-form { width: 100%; }
+html[data-world="icy"] .ag-boards-page .ag-board-card {
+  background: linear-gradient(145deg,#f8fcff,#e9f5ff);
+  border-color: rgba(90,155,201,.46);
+  box-shadow: 0 12px 25px rgba(46,104,155,.10);
+}
+html[data-world="icy"] .ag-boards-page .ag-board-card .ag-board-edit > summary {
+  background: #e1f2ff; border-color: #a3cce7; color: #1b5881;
+}
+html[data-world="icy"] .ag-boards-page .ag-board-card button.ag-board-delete {
+  background: #fff3fa; border-color: #e6b4cb; color: #a03172;
+}
+
+/* Shared light-weight reaction footer: Board, Code, and public songs. */
+.ag-boards-page .ag-board-card .ag-social,
+.ag-ce-page .ag-ce-card .ag-social,
+.ag-v2-shell .ag-v2-song-card .ag-social {
+  display: grid; grid-template-columns: max-content minmax(0,1fr);
+  align-items: center; column-gap: 11px; row-gap: 4px;
+  border: 0; border-top: 1px solid rgba(226,178,255,.20);
+  border-radius: 0; box-shadow: none; backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(34,23,65,.32);
+  padding: 12px 17px 13px; margin: 0;
+  font-size: 12px;
+}
+.ag-boards-page .ag-board-card .ag-social-summary,
+.ag-ce-page .ag-ce-card .ag-social-summary,
+.ag-v2-shell .ag-v2-song-card .ag-social-summary {
+  display: inline-flex; align-items: center; gap: 6px; flex-wrap: nowrap; margin: 0;
+}
+/* Comments count already appears in View comments -- show it only once. */
+.ag-boards-page .ag-board-card .ag-social-summary > .ag-social-count:last-child,
+.ag-ce-page .ag-ce-card .ag-social-summary > .ag-social-count:last-child,
+.ag-v2-shell .ag-v2-song-card .ag-social-summary > .ag-social-count:last-child { display: none; }
+.ag-boards-page .ag-board-card .ag-social-like,
+.ag-ce-page .ag-ce-card .ag-social-like,
+.ag-v2-shell .ag-v2-song-card .ag-social-like {
+  border: 1px solid rgba(217,178,246,.25);
+  border-radius: 999px; padding: 6px 10px; background: rgba(255,255,255,.045);
+  white-space: nowrap; font-weight: 750; font-size: 12px;
+}
+.ag-boards-page .ag-board-card .ag-social-like.is-liked,
+.ag-ce-page .ag-ce-card .ag-social-like.is-liked,
+.ag-v2-shell .ag-v2-song-card .ag-social-like.is-liked { color: #ff86d1; border-color: rgba(255,132,210,.52); }
+.ag-boards-page .ag-board-card .ag-social-comments,
+.ag-ce-page .ag-ce-card .ag-social-comments,
+.ag-v2-shell .ag-v2-song-card .ag-social-comments { min-width: 0; }
+.ag-boards-page .ag-board-card .ag-social-comments summary,
+.ag-ce-page .ag-ce-card .ag-social-comments summary,
+.ag-v2-shell .ag-v2-song-card .ag-social-comments summary {
+  cursor: pointer; display: list-item; color: #e6d9ff;
+  font-size: 12px; font-weight: 740; line-height: 1.5;
+}
+.ag-boards-page .ag-board-card .ag-social-comments[open],
+.ag-ce-page .ag-ce-card .ag-social-comments[open],
+.ag-v2-shell .ag-v2-song-card .ag-social-comments[open] { grid-column: 1 / -1; margin-top: 7px; }
+.ag-boards-page .ag-board-card .ag-social-form,
+.ag-ce-page .ag-ce-card .ag-social-form,
+.ag-v2-shell .ag-v2-song-card .ag-social-form {
+  grid-column: 1 / -1; display: none; align-items: center;
+  gap: 7px; margin: 6px 0 0; min-width: 0;
+}
+.ag-boards-page .ag-board-card .ag-social-comments[open] ~ .ag-social-form,
+.ag-ce-page .ag-ce-card .ag-social-comments[open] ~ .ag-social-form,
+.ag-v2-shell .ag-v2-song-card .ag-social-comments[open] ~ .ag-social-form { display: flex; }
+.ag-boards-page .ag-board-card .ag-social-form input,
+.ag-ce-page .ag-ce-card .ag-social-form input,
+.ag-v2-shell .ag-v2-song-card .ag-social-form input { padding: 9px 11px; min-width: 0; font-size: 12px; }
+.ag-boards-page .ag-board-card .ag-social-form button,
+.ag-ce-page .ag-ce-card .ag-social-form button,
+.ag-v2-shell .ag-v2-song-card .ag-social-form button {
+  width: auto; flex: 0 0 auto; padding: 9px 12px; min-height: 37px; font-size: 12px;
+}
+.ag-boards-page .ag-board-card .ag-social-login,
+.ag-ce-page .ag-ce-card .ag-social-login,
+.ag-v2-shell .ag-v2-song-card .ag-social-login { grid-column: 1 / -1; }
+/* Code Exchange already has a padded card; flush its reactions to the edges. */
+.ag-ce-page .ag-ce-card .ag-social {
+  margin: 18px -21px -21px;
+  padding: 12px 20px 14px;
+  background: rgba(9,16,39,.32);
+  border-top-color: var(--ce-line);
+}
+.ag-ce-page .ag-ce-card { box-shadow: 0 13px 35px rgba(2,5,17,.18); }
+.ag-ce-page .ag-ce-card .ag-ce-card-bottom { align-items: center; }
+.ag-ce-page .ag-ce-card .ag-ce-owner-actions { gap: 8px; }
+.ag-ce-page .ag-ce-card .ag-ce-edit > summary,
+.ag-ce-page .ag-ce-card button.ag-ce-delete { min-height: 38px; display: inline-flex; align-items: center; border-radius: 11px; }
+.ag-ce-page .ag-ce-card .ag-ce-edit:not([open]) { order: 0; }
+.ag-ce-page .ag-ce-card .ag-ce-owner-actions > form { order: 1; }
+/* Public music: integrate without covering artwork or controls. */
+.ag-v2-shell .ag-v2-song-card .ag-social {
+  margin: 14px -16px -16px; padding: 12px 16px 14px;
+}
+html[data-world="icy"] .ag-boards-page .ag-board-card .ag-social,
+html[data-world="icy"] .ag-ce-page .ag-ce-card .ag-social,
+html[data-world="icy"] .ag-v2-shell .ag-v2-song-card .ag-social {
+  background: rgba(228,245,255,.75); border-top-color: rgba(73,146,194,.25);
+  color: #1d4f72;
+}
+html[data-world="icy"] .ag-boards-page .ag-board-card .ag-social-comments summary,
+html[data-world="icy"] .ag-ce-page .ag-ce-card .ag-social-comments summary,
+html[data-world="icy"] .ag-v2-shell .ag-v2-song-card .ag-social-comments summary { color: #23678c; }
+html[data-world="icy"] .ag-boards-page .ag-board-card .ag-social-like,
+html[data-world="icy"] .ag-ce-page .ag-ce-card .ag-social-like,
+html[data-world="icy"] .ag-v2-shell .ag-v2-song-card .ag-social-like { background: rgba(255,255,255,.70); border-color: #a6cadd; }
+
+@media (max-width: 540px) {
+  body nav a.ag-nav-home-link { min-height: 36px; padding: 7px 11px; font-size: 12px; }
+  .ag-boards-page .ag-board-grid { gap: 17px; }
+  .ag-boards-page .ag-board-card .ag-social,
+  .ag-ce-page .ag-ce-card .ag-social,
+  .ag-v2-shell .ag-v2-song-card .ag-social { padding-inline: 11px; column-gap: 6px; }
+  .ag-ce-page .ag-ce-card .ag-social { margin: 15px -21px -21px; padding-inline: 19px; }
+  .ag-v2-shell .ag-v2-song-card .ag-social { margin: 14px -16px -16px; padding-inline: 13px; }
+  .ag-boards-page .ag-board-card .ag-social-form,
+  .ag-ce-page .ag-ce-card .ag-social-form,
+  .ag-v2-shell .ag-v2-song-card .ag-social-form { flex-wrap: nowrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ag-boards-page .ag-board-card,
+  body nav a.ag-nav-home-link,
+  .ag-boards-page .ag-boards-topline > a,
+  .ag-ce-page .ag-ce-topline > a { transition: none; transform: none; }
+}
+
+/* Login and signup keep one clear Back action when the redundant navbar Home is removed. */
+.ag-auth-navigation { max-width:1150px; margin:20px auto 0; padding:0 22px; }
+.ag-auth-back { display:inline-flex;align-items:center;min-height:39px;padding:9px 15px;border-radius:999px;background:rgba(97,38,125,.70);border:1px solid rgba(255,192,246,.52);box-shadow:0 4px 18px rgba(12,5,37,.18);color:#fcf3ff!important;font-weight:800;text-decoration:none!important;font-size:12px; }
+.ag-auth-back:hover { background:rgba(136,57,164,.89); }
+.ag-auth-back:focus-visible { outline:3px solid #a5e2ff;outline-offset:2px; }
+html[data-world="icy"] .ag-auth-back {background:rgba(232,249,255,.96);border-color:rgba(48,121,176,.49);color:#185681!important;}
+html[data-world="icy"] .ag-auth-back:hover {background:#d1ecff;}

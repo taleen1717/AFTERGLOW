@@ -23,7 +23,7 @@ class VisualBoardController extends Controller
         }
 
         $mine = $request->boolean('mine') && Auth::check();
-        $query = VisualBoard::query()->with('user')->latest();
+        $query = VisualBoard::query()->with(['user', 'comments.user'])->withCount(['likes', 'comments'])->withExists(['likes as liked_by_me' => fn ($q) => $q->where('user_id', Auth::id() ?? 0)])->latest();
 
         if ($mood !== 'all') {
             $query->where('mood', $mood);

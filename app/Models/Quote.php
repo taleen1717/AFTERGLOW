@@ -12,4 +12,13 @@ class Quote extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\QuoteLike::class);
+    }
+
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\QuoteComment::class)->latest();
+    }
 }
