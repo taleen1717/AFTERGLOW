@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class FavoriteSong extends Model
 {
     public const MOODS = ['Night Drive', 'Icy Dream', 'Neon Rush', 'Art Mode', 'Soft Hours', 'Chaos', 'Love', 'Retro'];
-    protected $fillable = ['title', 'artist', 'url', 'artwork_url', 'platform', 'mood', 'quote_id', 'is_on_repeat'];
+    protected $fillable = ['title', 'artist', 'url', 'artwork_url', 'platform', 'mood', 'quote_id', 'is_on_repeat', 'is_public'];
 
-    protected function casts(): array { return ['is_on_repeat' => 'boolean']; }
+    protected function casts(): array { return ['is_on_repeat' => 'boolean', 'is_public' => 'boolean']; }
     public function user(): BelongsTo { return $this->belongsTo(User::class); }
     public function quote(): BelongsTo { return $this->belongsTo(Quote::class); }
 
@@ -36,5 +36,15 @@ class FavoriteSong extends Model
         }
         return is_string($id) && preg_match('/^[A-Za-z0-9_-]{11}$/', $id)
             ? 'https://www.youtube-nocookie.com/embed/' . $id : null;
+    }
+
+    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SongLike::class);
+    }
+
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SongComment::class)->latest();
     }
 }

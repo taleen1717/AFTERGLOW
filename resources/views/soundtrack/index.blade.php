@@ -12,7 +12,7 @@
             <p class="ag-music-kicker">AFTERGLOW / YOUR PERSONAL MUSIC UNIVERSE</p>
             <h1>MY <em>SOUNDTRACK</em><span aria-hidden="true"> ✦</span></h1>
             <p>Find the sound of your world.</p>
-            <div class="ag-music-links"><a href="{{ route('home') }}">← Back to Quotes</a><a href="#song-add">+ Discover Music</a></div>
+            <div class="ag-music-links"><a href="{{ route('home') }}">← Back to Quotes</a><a href="#song-add">+ Discover Music</a><a href="{{ route('soundtrack.discover') }}">✦ Community Soundtrack</a></div>
         </div>
         <div class="ag-hero-vinyl" aria-hidden="true"><div class="ag-vinyl-ring"><span>AFTERGLOW</span></div></div>
     </header>
@@ -63,6 +63,9 @@
                 <input type="hidden" name="video_id" id="ag-video-id">
                 <label>Mood<select name="mood">@foreach($moods as $mood)<option value="{{ $mood }}">{{ $mood }}</option>@endforeach</select></label>
                 <label>Attach to your quote (optional)<select name="quote_id"><option value="">No quote attached</option>@foreach($quotes as $quote)<option value="{{ $quote->id }}">{{ \Illuminate\Support\Str::limit($quote->content, 48) }}</option>@endforeach</select></label>
+                <label class="ag-span-all">Who can see this song?
+                    <select name="is_public" required><option value="0" selected>Private — only in my library</option><option value="1">Public — share with everyone</option></select>
+                </label>
                 <button type="submit" class="ag-button-primary ag-span-all" id="ag-youtube-save-btn" disabled>Choose a result, then verify playback</button>
             </form>
         </div>
@@ -73,16 +76,20 @@
                 <input id="ag-spotify-search-text" type="search" placeholder="Search artist or song on Spotify..." maxlength="140">
                 <a class="ag-music-search-spotify" id="ag-spotify-search-link" href="https://open.spotify.com/search" target="_blank" rel="noopener noreferrer">Search Spotify ↗</a>
             </div>
-            <form method="POST" action="{{ route('soundtrack.store') }}" class="ag-add-song-form ag-spotify-form">
+            <form method="POST" action="{{ route('soundtrack.store') }}" class="ag-add-song-form ag-spotify-form" data-spotify-metadata-url="{{ route('soundtrack.spotify-metadata') }}">
                 @csrf
                 <input type="hidden" name="platform" value="spotify">
                 <label class="ag-span-all">Spotify Share URL
                     <input type="url" name="spotify_url" required maxlength="500" placeholder="https://open.spotify.com/track/..." autocomplete="off">
                 </label>
-                <label>Song / album / playlist name<input name="title" maxlength="120" placeholder="Fallback if metadata is unavailable"></label>
-                <label>Artist / curator<input name="artist" maxlength="120" placeholder="Artist name"></label>
+                <p class="ag-help ag-span-all" id="ag-spotify-meta-status" role="status" aria-live="polite">Paste a Spotify link to fill in its title automatically. Artist details are filled when Spotify catalog access is available; otherwise you can type them.</p>
+                <label>Song / album / playlist name<input name="title" maxlength="120" placeholder="Auto-filled from Spotify; editable"></label>
+                <label>Artist / curator<input name="artist" maxlength="120" placeholder="Auto-filled when available; editable"></label>
                 <label>Mood<select name="mood">@foreach($moods as $mood)<option value="{{ $mood }}">{{ $mood }}</option>@endforeach</select></label>
                 <label>Attach to your quote (optional)<select name="quote_id"><option value="">No quote attached</option>@foreach($quotes as $quote)<option value="{{ $quote->id }}">{{ \Illuminate\Support\Str::limit($quote->content, 48) }}</option>@endforeach</select></label>
+                <label class="ag-span-all">Who can see this song?
+                    <select name="is_public" required><option value="0" selected>Private — only in my library</option><option value="1">Public — share with everyone</option></select>
+                </label>
                 <button type="submit" class="ag-button-primary ag-span-all">+ Add Spotify to My Soundtrack</button>
             </form>
             <p class="ag-help">Supports Spotify tracks, albums, playlists, artists and podcasts via official Spotify embeds. Playback may be limited by Spotify availability and account status.</p>
@@ -106,7 +113,7 @@
                 </div></div><small>{{ $song->resolved_platform === 'spotify' ? '◉ Spotify' : '▶ YouTube' }}</small></div>
                 <div class="ag-song-body">
                     <div class="ag-song-tags"><span class="ag-song-mood">{{ $song->mood }}</span>@if($song->is_on_repeat)<span class="ag-repeat-tag">↻ ON REPEAT</span>@endif</div>
-                    <h3>{{ $song->title }}</h3><p class="ag-song-artist">{{ $song->artist }}</p>
+                    <h3>{{ $song->title }}</h3><p class="ag-song-artist">{{ $song->artist }} · <strong>{{ $song->is_public ? '🌍 Public' : '🔒 Private' }}</strong></p>
                     @if ($song->quote)<blockquote class="ag-song-linked-quote">“{{ \Illuminate\Support\Str::limit($song->quote->content, 125) }}”</blockquote>@endif
                     <div class="ag-song-actions">
                         <a href="{{ $song->url }}" target="_blank" rel="noopener noreferrer" class="ag-listen-link">Open in {{ ucfirst($song->resolved_platform) }} ↗</a>
@@ -156,12 +163,18 @@
                         </div>
                     </details>
                     @endif
+                    @if ($song->is_public)
+                        <x-social-actions :item="$song" kind="song" />
+                    @else
+                        <p class="ag-song-privacy-note">🔒 Private song — only you can see it. Share it publicly to receive likes and comments.</p>
+                    @endif
                     <details class="ag-song-edit"><summary>✎ Edit details</summary><form method="POST" action="{{ route('soundtrack.update', $song) }}">
                         @csrf @method('PUT')
                         <label>Title<input name="title" required maxlength="120" value="{{ $song->title }}"></label>
                         <label>Artist<input name="artist" required maxlength="120" value="{{ $song->artist }}"></label>
                         <label>Mood<select name="mood">@foreach($moods as $mood)<option value="{{ $mood }}" @selected($song->mood === $mood)>{{ $mood }}</option>@endforeach</select></label>
                         <label>Quote<select name="quote_id"><option value="">None</option>@foreach($quotes as $quote)<option value="{{ $quote->id }}" @selected($song->quote_id === $quote->id)>{{ \Illuminate\Support\Str::limit($quote->content, 36) }}</option>@endforeach</select></label>
+                        <label>Visibility<select name="is_public" required><option value="0" @selected(! $song->is_public)>Private — only me</option><option value="1" @selected($song->is_public)>Public — community</option></select></label>
                         <button type="submit" class="ag-button-primary">Save Changes</button>
                     </form></details>
                     <form method="POST" action="{{ route('soundtrack.destroy', $song) }}" class="ag-delete-song" onsubmit="return confirm('Remove this song from your soundtrack?')">@csrf @method('DELETE')<button type="submit">Remove from library ×</button></form>
@@ -177,4 +190,6 @@
 <script defer src="{{ asset('afterglow/music-dual.js') . '?v=final-1030' }}"></script>
 <script defer src="{{ asset('afterglow/vinyl-view.js') . '?v=final-1030' }}"></script>
 <script defer src="{{ asset('afterglow/playback-fallback.js') . '?v=final-1030' }}"></script>
+
+<script defer src="{{ asset('afterglow/spotify-autofill.js') }}?v=20261113-2"></script>
 @endsection

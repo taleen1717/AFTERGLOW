@@ -14,7 +14,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-       $quotes = Quote::latest()->get();
+       $quotes = Quote::with(['user', 'comments.user'])->withCount(['likes', 'comments'])->withExists(['likes as liked_by_me' => fn ($query) => $query->where('user_id', Auth::id() ?? 0)])->latest()->get();
         return view('welcome', compact('quotes'));
     }
 

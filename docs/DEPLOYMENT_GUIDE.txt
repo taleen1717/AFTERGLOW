@@ -1,0 +1,15 @@
+AFTERGLOW v2 - Deployment checklist (do not deploy untested code directly to production)
+
+1. Back up your local project and Neon PostgreSQL production database.
+2. Extract AFTERGLOW_v2_Changes_Only.zip over a COPY of the latest local Laravel project root (where artisan is). Do not copy .env, vendor or node_modules.
+3. In VS Code terminal in project root: composer install; npm ci; npm run build; php artisan test.
+4. Check php artisan route:list and php artisan migrate:status. On local/staging database run php artisan migrate.
+5. Manually test: quote like/unlike/comments; board likes/comments; private/public songs; profile/avatar; dark/light mode; signup/login.
+6. Review Git diff, then push to a new branch e.g. feature/afterglow-v2, open PR, wait for green GitHub Actions.
+7. Only after successful staging verification merge into main. Render may auto-deploy; startup runs php artisan migrate --force. Verify Cloudinary/Neon configuration remains unchanged.
+8. Before making GitHub Public, inspect the ENTIRE Git history for credentials, personal information and copyrighted images. Rotate any exposed keys and rewrite history if needed. Public means everyone can download the code and its commit history.
+9. GitHub UI: Settings > General > Danger Zone > Change repository visibility > Public (only after audit).
+
+Source baseline: the user-uploaded AFTERGLOW-main.zip, commit e63c4a0 (Oct 31 2026). If newer changes exist on GitHub, merge rather than blindly overwrite them.
+
+IMPORTANT: PHP syntax lint passed locally, but full Laravel feature tests have NOT run in this workspace because Composer dependencies / PDO SQLite driver are unavailable. Do not deploy to production until php artisan test passes in a configured Laravel environment.

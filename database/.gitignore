@@ -1,1 +1,9 @@
-*.sqlite*
+
+.env
+.env.*
+!.env.example
+
+*.bak
+*.sqlite
+*.sqlite3
+Install-Spotify*.ps1

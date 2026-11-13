@@ -13,4 +13,14 @@ class CodeSnippet extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CodeLike::class);
+    }
+
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CodeComment::class)->latest();
+    }
 }

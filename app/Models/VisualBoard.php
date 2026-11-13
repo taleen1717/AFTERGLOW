@@ -13,4 +13,13 @@ class VisualBoard extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\BoardLike::class);
+    }
+
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\BoardComment::class)->latest();
+    }
 }
