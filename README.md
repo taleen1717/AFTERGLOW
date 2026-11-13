@@ -56,3 +56,42 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## AFTERGLOW v2 — Community and profiles
+
+- Quote and Visual Board likes and comments (signed-in users; owner-only comment deletion).
+- Music privacy: every saved song defaults to Private; owners can opt in to Public community discovery.
+- User profile: editable display name, email, bio, avatar and password; Cyber Night / Icy Ethereal themes.
+- Database migration: `2026_11_12_000001_add_social_profiles_and_music_visibility.php`.
+- Requirements and acceptance criteria: `docs/AFTERGLOW_V2_REQUIREMENTS.md`.
+- Tests: `php artisan test`; GitHub Actions runs the test suite on PRs.
+
+**Important:** Back up the production database before deployment, test on a staging service, and never commit `.env` or Cloudinary/Neon keys. All existing songs remain private after migration. Before making the GitHub repository public, scan the full Git history for exposed credentials and verify you have rights to publish all images/assets.
+
+
+## AFTERGLOW v3 — Social interactions everywhere appropriate
+
+- **Likes and comments** on Quotes, Visual Boards, Code Exchange snippets and **Public** Community Soundtrack songs. Authors can like their own posts.
+- Every user has at most one like per post; clicking again removes it. Only comment authors may delete their comments.
+- Guest users can read counts and comments, but must sign in to react. Comments are escaped and limited to 500 characters.
+- Private songs cannot be viewed or reacted to via social endpoints; existing songs remain private by default. Switching a song private hides existing interactions until it is public again.
+- My Soundtrack owners can see reactions to their public songs; private songs show no social controls.
+- New migration: `2026_11_12_000002_add_code_and_song_interactions.php` (run after v2 migration). No existing data is dropped.
+- Requirements: `docs/AFTERGLOW_V3_INTERACTIONS.md`. Tests: `tests/Feature/CodeAndSongInteractionsTest.php` plus updated quote/board tests.
+
+### Local verification before publishing
+
+```bash
+composer install
+npm ci
+npm run build
+php artisan migrate
+php artisan test
+```
+
+Run the commands in a safe local/staging environment with a backup. **Do not deploy this archive directly to Render** until the tests and manual acceptance checks pass. Keep GitHub Private until a full-history secrets and asset-rights audit is complete.
+
+### Public repository safety note
+
+The original exported project contained a root-level file named `laravel` which was an **SQLite database**, not source code. It has been deliberately **excluded** from this v3 source archive. The old Git history may still contain that database (including a session record); do not switch the repository to Public before checking and cleaning its history. `.gitignore` now excludes this file for future changes.

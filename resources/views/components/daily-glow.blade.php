@@ -57,6 +57,7 @@
                         <p class="ag-dg-text">“{{ $dailyQuote->content }}”</p>
                         <footer class="ag-dg-author">— {{ $dailyQuote->user?->name ?? 'AFTERGLOW Community' }}</footer>
                     </blockquote>
+                    <a class="ag-dg-react-link" href="{{ route('home') }}#quote-{{ $dailyQuote->id }}">♡ Like or comment on this quote ↗</a>
                 @else
                     <p class="ag-dg-empty">Today's glow starts with the first quote. Share one to light up this space ✨</p>
                 @endif

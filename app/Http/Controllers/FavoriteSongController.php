@@ -16,6 +16,9 @@ class FavoriteSongController extends Controller
     {
         return view('soundtrack.index', [
             'songs' => FavoriteSong::where('user_id', $request->user()->id)->with('quote:id,content')
+                ->with(['comments.user'])
+                ->withCount(['likes', 'comments'])
+                ->withExists(['likes as liked_by_me' => fn ($query) => $query->where('user_id', $request->user()->id)])
                 ->orderByDesc('is_on_repeat')->latest()->get(),
             'quotes' => Quote::where('user_id', $request->user()->id)->latest()->get(['id', 'content']),
             'moods' => FavoriteSong::MOODS,
@@ -29,7 +32,7 @@ class FavoriteSongController extends Controller
             ? $music->youtubeVideo($data['video_id'])
             : $music->spotifyFromUrl($data['spotify_url'], $data['title'] ?: 'Spotify favorite', $data['artist'] ?: 'Spotify');
         $request->user()->favoriteSongs()->create($track + [
-            'mood' => $data['mood'], 'quote_id' => $data['quote_id'] ?? null,
+            'mood' => $data['mood'], 'quote_id' => $data['quote_id'] ?? null, 'is_public' => (bool) $data['is_public'],
         ]);
         return redirect()->route('soundtrack.index')->with('soundtrack_success', 'Saved to My Soundtrack!');
     }
@@ -37,7 +40,7 @@ class FavoriteSongController extends Controller
     public function update(FavoriteSongRequest $request, FavoriteSong $favoriteSong): RedirectResponse
     {
         $this->owner($request, $favoriteSong);
-        $favoriteSong->update($request->safe()->only(['title', 'artist', 'mood', 'quote_id']));
+        $favoriteSong->update($request->safe()->only(['title', 'artist', 'mood', 'quote_id', 'is_public']));
         return redirect()->route('soundtrack.index')->with('soundtrack_success', 'Song updated!');
     }
 
@@ -58,6 +61,17 @@ class FavoriteSongController extends Controller
             if (!$already) $favoriteSong->update(['is_on_repeat' => true]);
         });
         return redirect()->route('soundtrack.index')->with('soundtrack_success', 'Currently on Repeat updated!');
+    }
+
+    public function discover(): View
+    {
+        return view('soundtrack.discover', [
+            'songs' => FavoriteSong::where('is_public', true)
+                ->with(['user', 'comments.user'])
+                ->withCount(['likes', 'comments'])
+                ->withExists(['likes as liked_by_me' => fn ($query) => $query->where('user_id', auth()->id() ?? 0)])
+                ->latest()->paginate(18),
+        ]);
     }
 
     private function owner(Request $request, FavoriteSong $song): void

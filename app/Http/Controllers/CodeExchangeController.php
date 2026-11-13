@@ -23,7 +23,11 @@ class CodeExchangeController extends Controller
         $search = trim((string) $request->query('q', ''));
         $search = mb_substr($search, 0, 100);
         $onlyMine = $request->boolean('mine') && Auth::check();
-        $snippets = CodeSnippet::query()->with('user')->latest();
+        $snippets = CodeSnippet::query()
+            ->with(['user', 'comments.user'])
+            ->withCount(['likes', 'comments'])
+            ->withExists(['likes as liked_by_me' => fn ($query) => $query->where('user_id', Auth::id() ?? 0)])
+            ->latest();
 
         if ($language !== 'all') {
             $snippets->where('language', $language);

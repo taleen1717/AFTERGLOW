@@ -1,0 +1,188 @@
+/* AFTERGLOW v2 social layer. Theme-aware; avoids altering existing quote/board visuals. */
+.ag-nav-profile-name {color:#fff; text-decoration:none; white-space:nowrap; font-size:.95rem}
+.ag-nav-profile-name:hover {text-decoration:underline}
+.ag-nav-profile-name span {font-size:.75rem;opacity:.8}
+html[data-world="icy"] .ag-nav-profile-name {color:#17456d}
+.ag-social {padding:14px 14px 16px; border:1px solid var(--ag-border,rgba(221,150,255,.28)); border-radius:16px; margin:12px 0 6px; color:var(--ag-social-text,#f6efff); background:rgba(12,9,32,.68); backdrop-filter:blur(10px); font-size:.87rem}
+.ag-social-summary {display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:8px}
+.ag-social-like {border:1px solid rgba(255,255,255,.23);border-radius:999px;padding:5px 12px;color:inherit;background:rgba(255,255,255,.08);cursor:pointer}
+.ag-social-like.is-liked {color:#ff7abb;border-color:#ff7abb}
+.ag-social-count {opacity:.82}
+.ag-social-comments summary {cursor:pointer;font-weight:650; padding:5px 0}
+.ag-social-thread {display:grid;gap:7px;margin:8px 0}
+.ag-social-comment {display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.07);overflow-wrap:anywhere}
+.ag-social-comment strong {font-size:.8rem}
+.ag-social-comment p {margin:2px 0 0;white-space:pre-wrap}
+.ag-social-comment button {font-size:1.2rem;cursor:pointer}
+.ag-social-muted {opacity:.7;font-size:.8rem}
+.ag-social-form {display:flex;gap:8px;margin-top:10px}
+.ag-social-form input {min-width:0;flex:1;border-radius:10px;padding:9px 11px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:inherit}
+.ag-social-form input::placeholder {color:rgba(240,230,250,.65)}
+.ag-social-form button,.ag-v2-form button {border:0;border-radius:10px;background:linear-gradient(115deg,#ff47c8,#9959f5);color:#150c25;font-weight:750;padding:9px 15px;cursor:pointer}
+.ag-social-login {color:#e9b6ff}
+.ag-board-card .ag-social {margin:8px 12px 14px}
+html[data-world="icy"] .ag-social {--ag-social-text:#163c62;background:rgba(239,249,255,.92);border-color:rgba(76,154,211,.34)}
+html[data-world="icy"] .ag-social-form input {background:#fff;border-color:#a7cce6;color:#153b60}
+html[data-world="icy"] .ag-social-form input::placeholder {color:#617f97}
+html[data-world="icy"] .ag-social-comment {background:rgba(117,187,230,.12)}
+html[data-world="icy"] .ag-social-form button,html[data-world="icy"] .ag-v2-form button {background:linear-gradient(120deg,#b8efff,#6fb5ec);color:#163e69}
+.ag-v2-shell {max-width:1100px;margin:0 auto;padding:42px 20px 90px;min-height:70vh;color:#f8f2ff}
+.ag-v2-hero {padding:30px 34px;border-radius:24px;border:1px solid rgba(242,177,255,.28);background:linear-gradient(130deg,rgba(25,10,56,.9),rgba(46,16,65,.65));box-shadow:0 12px 36px rgba(10,3,33,.25)}
+.ag-v2-kicker {color:#efa3ff;font-size:.78rem;letter-spacing:.15em;font-weight:700}
+.ag-v2-hero h1 {font-size:clamp(2.2rem,5vw,3.8rem);font-weight:850;line-height:1.15;margin:14px 0}
+.ag-v2-hero h1 em {color:#ff76d3;font-style:normal}
+.ag-v2-hero p {max-width:640px;line-height:1.7;opacity:.86}
+.ag-v2-back {display:inline-block;margin-top:16px;color:#f5c6ff;font-weight:650}
+.ag-v2-profile-grid {display:grid;grid-template-columns:1fr 1.4fr;gap:20px;margin-top:22px;align-items:start}
+.ag-v2-panel {border-radius:22px;padding:24px;border:1px solid rgba(245,175,255,.25);background:rgba(14,10,40,.86);box-shadow:0 10px 35px rgba(5,3,25,.18)}
+.ag-v2-panel h2 {font-size:1.3rem;font-weight:800;margin-bottom:15px}
+.ag-v2-panel:last-child {grid-column:1/-1}
+.ag-v2-avatar-panel {display:flex;align-items:center;flex-direction:column;text-align:center}
+.ag-v2-avatar {width:150px;height:150px;object-fit:cover;border-radius:50%;border:4px solid #ff80df;box-shadow:0 0 26px rgba(255,94,208,.3);margin:8px auto 18px}
+.ag-v2-form {width:100%;display:grid;gap:13px}
+.ag-v2-form label {display:grid;gap:6px;font-size:.9rem;font-weight:650}
+.ag-v2-form label span {font-size:.78rem;opacity:.7}
+.ag-v2-form input,.ag-v2-form textarea {width:100%;padding:12px 13px;border-radius:11px;border:1px solid rgba(255,255,255,.27);background:rgba(255,255,255,.1);color:inherit}
+.ag-v2-form input[type="file"] {font-size:.8rem}
+.ag-v2-form textarea {resize:vertical}
+.ag-v2-form button {justify-self:start}
+.ag-v2-danger {margin-top:12px;color:#ffc6df;text-decoration:underline}
+.ag-v2-success,.ag-v2-error {margin:18px 0;padding:13px 18px;border-radius:12px;background:rgba(45,153,125,.2);border:1px solid rgba(96,213,170,.5)}
+.ag-v2-error {background:rgba(210,65,94,.2);border-color:rgba(255,130,150,.55)}
+.ag-v2-hint {opacity:.8;margin-bottom:12px}
+.ag-v2-song-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:24px}
+.ag-v2-song-card {display:flex;gap:16px;padding:16px;background:rgba(20,12,49,.89);border:1px solid rgba(245,175,255,.3);border-radius:18px;min-width:0}
+.ag-v2-song-cover {width:95px;height:95px;flex:none;display:grid;place-items:center;background:#50346f;border-radius:14px;overflow:hidden;font-size:2rem}
+.ag-v2-song-cover img {width:100%;height:100%;object-fit:cover}
+.ag-v2-song-card h2 {font-size:1.05rem;font-weight:750;overflow-wrap:anywhere}
+.ag-v2-song-card p {opacity:.85;font-size:.9rem}
+.ag-v2-song-card small {display:block;margin:5px 0 10px;opacity:.65}
+.ag-v2-song-card a {color:#ffc5ed;font-weight:650}
+.ag-v2-pagination {margin-top:22px}
+.ag-v2-empty {padding:24px;background:rgba(15,10,45,.8);border-radius:18px}
+html[data-world="icy"] .ag-v2-shell {color:#143d63}
+html[data-world="icy"] .ag-v2-hero {background:linear-gradient(125deg,rgba(241,250,255,.96),rgba(207,235,250,.91));border-color:#9bcbe9}
+html[data-world="icy"] .ag-v2-hero h1 em {color:#2186c9}
+html[data-world="icy"] .ag-v2-kicker,html[data-world="icy"] .ag-v2-back {color:#207bb6}
+html[data-world="icy"] .ag-v2-panel,html[data-world="icy"] .ag-v2-song-card,html[data-world="icy"] .ag-v2-empty {background:rgba(245,252,255,.94);border-color:#b3d7eb}
+html[data-world="icy"] .ag-v2-form input,html[data-world="icy"] .ag-v2-form textarea {background:#fff;border-color:#a6cde5;color:#143d63}
+html[data-world="icy"] .ag-v2-song-card a {color:#1c76b1}
+@media(max-width:700px){.ag-v2-profile-grid {grid-template-columns:1fr}.ag-v2-panel:last-child {grid-column:auto}.ag-v2-hero{padding:23px 19px}.ag-social-form{flex-wrap:wrap}.ag-social-form button{width:100%}}
+
+.ag-v2-author-avatar {display:inline-block;width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:5px;border:1px solid rgba(255,255,255,.5)}
+.ag-v2-home-music {display:inline-block;margin-top:12px;color:#ffbaf0;text-decoration:underline;font-weight:700;font-size:.91rem}
+html[data-world="icy"] .ag-v2-home-music {color:#1878b3}
+
+/* AFTERGLOW v3: code and public music reactions, commenter avatars, both worlds. */
+.ag-social-comment {justify-content:flex-start;align-items:flex-start}
+.ag-social-comment-avatar {width:32px;height:32px;flex:0 0 32px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.3)}
+.ag-social-comment-content {min-width:0;flex:1}
+.ag-social-comment-delete {background:transparent;border:0;color:inherit;opacity:.8;padding:2px 5px}
+.ag-social-comment-delete:hover {opacity:1}
+.ag-ce-card .ag-social {margin:16px 0 0}
+.ag-v2-song-card {display:block}
+.ag-v2-song-main {display:flex;align-items:flex-start;gap:16px}
+.ag-v2-song-info {min-width:0;flex:1}
+.ag-v2-song-card .ag-social {margin:14px 0 0;padding:12px}
+.ag-song-card .ag-social {margin-top:16px}
+.ag-song-privacy-note {font-size:.8rem;line-height:1.5;opacity:.8;margin:14px 0 8px}
+html[data-world="icy"] .ag-social-comment-avatar {border-color:#96c7e5}
+@media(max-width:540px) {.ag-v2-song-main {flex-wrap:wrap}.ag-v2-song-cover {width:72px;height:72px}}
+
+.ag-dg-react-link {display:inline-block;margin-top:14px;color:#ffd3f6;font-weight:750;text-decoration:underline;text-underline-offset:4px}
+html[data-world="icy"] .ag-dg-react-link {color:#216ea6}
+.ag-quote-item[id] {scroll-margin-top:110px}
+
+
+/* AFTERGLOW v3 – quote reactions visually attached to the quote card. */
+#ag-quote-list .ag-quote-post {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(225, 186, 255, .33);
+    border-radius: 20px;
+    background: rgba(13, 9, 37, .85);
+    box-shadow: 0 12px 28px rgba(4, 3, 28, .22);
+}
+
+/* The image remains a full-size quote; the reactions become its footer. */
+body main #ag-quote-list .ag-quote-grid .ag-quote-post blockquote.ag-vibe-card {
+    width: 100%;
+    margin: 0;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+#ag-quote-list .ag-quote-post .ag-social {
+    margin: 0;
+    padding: 10px 14px 12px;
+    border: 0;
+    border-top: 1px solid rgba(235, 204, 255, .21);
+    border-radius: 0;
+    background: rgba(18, 11, 45, .55);
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    font-size: .81rem;
+}
+
+#ag-quote-list .ag-quote-post .ag-social-summary {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 10px 0 0;
+    gap: 0;
+}
+#ag-quote-list .ag-quote-post .ag-social-like {
+    padding: 5px 7px;
+    border: none;
+    background: transparent;
+    font-weight: 700;
+    transition: color .2s ease, transform .2s ease;
+}
+#ag-quote-list .ag-quote-post .ag-social-like:hover { transform: translateY(-1px); color: #ff9bdd; }
+#ag-quote-list .ag-quote-post .ag-social-like.is-liked { color: #ff7fc9; }
+/* The collapsible comments label already shows the count, so don't repeat it. */
+#ag-quote-list .ag-quote-post .ag-social-summary > .ag-social-count:last-child { display: none; }
+#ag-quote-list .ag-quote-post .ag-social-comments {
+    display: inline-block;
+    vertical-align: middle;
+}
+#ag-quote-list .ag-quote-post .ag-social-comments summary {
+    display: list-item;
+    padding: 4px 0;
+    cursor: pointer;
+    color: #e7d8ff;
+    font-size: .81rem;
+    font-weight: 650;
+}
+#ag-quote-list .ag-quote-post .ag-social-comments[open] { display: block; margin-top: 9px; }
+#ag-quote-list .ag-quote-post .ag-social-thread { margin: 8px 0 0; }
+/* Comment form opens with the thread, keeping the default card compact. */
+#ag-quote-list .ag-quote-post .ag-social-form { display: none; margin-top: 10px; }
+#ag-quote-list .ag-quote-post .ag-social-comments[open] ~ .ag-social-form { display: flex; }
+#ag-quote-list .ag-quote-post .ag-social-form input {
+    min-width: 0;
+    padding: 9px 10px;
+}
+#ag-quote-list .ag-quote-post .ag-social-form button { flex: 0 0 auto; width: auto; }
+#ag-quote-list .ag-quote-post .ag-social-login { display: block; margin-top: 9px; font-size: .78rem; }
+
+/* Same unified card in the Icy Ethereal world. */
+html[data-world="icy"] #ag-quote-list .ag-quote-post {
+    border-color: rgba(102, 169, 212, .38);
+    background: rgba(241, 250, 255, .94);
+}
+html[data-world="icy"] #ag-quote-list .ag-quote-post .ag-social {
+    background: rgba(232, 246, 255, .86);
+    border-top-color: rgba(90, 152, 198, .25);
+}
+html[data-world="icy"] #ag-quote-list .ag-quote-post .ag-social-comments summary { color: #225b88; }
+html[data-world="icy"] #ag-quote-list .ag-quote-post .ag-social-like:hover { color: #b7358b; }
+
+@media (max-width: 480px) {
+    #ag-quote-list .ag-quote-post .ag-social { padding-inline: 11px; }
+    #ag-quote-list .ag-quote-post .ag-social-summary { margin-right: 6px; }
+    #ag-quote-list .ag-quote-post .ag-social-form { flex-wrap: nowrap; }
+}

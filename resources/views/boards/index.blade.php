@@ -93,7 +93,7 @@
                             <span class="ag-board-mood">✧ {{ $board->mood }}</span>
                             <h3>{{ $board->title }}</h3>
                             @if ($board->description)<p class="ag-board-desc">{{ $board->description }}</p>@endif
-                            <div class="ag-board-meta"><span>by {{ $board->user?->name ?? 'Community member' }}</span><time datetime="{{ $board->created_at->toDateString() }}">{{ $board->created_at->format('M j, Y') }}</time></div>
+                            <div class="ag-board-meta"><span>@if($board->user?->avatar_path)<img class="ag-v2-author-avatar" src="{{ route('users.avatar', $board->user) }}" alt="">@endif by {{ $board->user?->name ?? 'Community member' }}</span><time datetime="{{ $board->created_at->toDateString() }}">{{ $board->created_at->format('M j, Y') }}</time></div>
                             @if ($isOwner)
                                 <div class="ag-board-owner">
                                     <details class="ag-board-edit">
@@ -125,6 +125,7 @@
                                 </div>
                             @endif
                         </div>
+                        <x-social-actions :item="$board" kind="board" />
                     </article>
                 @endforeach
             </div>

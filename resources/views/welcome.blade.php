@@ -83,7 +83,7 @@
                     $colorPlate = $isCustomColor ? $quoteColorPlate($textColor) : null;
                 @endphp
 
-                <div class="ag-quote-item {{ $isMine && $quote->id === $editingId ? 'ag-quote-item--editing' : '' }}" data-ag-quote-mood="{{ $quoteMood }}">
+                <div id="quote-{{ $quote->id }}" class="ag-quote-item {{ $isMine && $quote->id === $editingId ? 'ag-quote-item--editing' : '' }}" data-ag-quote-mood="{{ $quoteMood }}">
                     @if ($isMine && $quote->id === $editingId)
                         <form method="POST" action="{{ route('edit_quote', $quote) }}"
                             class="ag-vibe-edit-form space-y-3 rounded-2xl bg-tuwaiq-purple p-5 shadow" data-ag-vibe-form>
@@ -107,6 +107,7 @@
                         </form>
                     @else
                         {{-- Shared visual card, while edit/delete remains available only to its owner. --}}
+                        <div class="ag-quote-post">
                         <blockquote class="ag-vibe-card {{ $cardImage ? '' : 'ag-vibe-card--plain' }}" data-ag-vibe-mood="{{ $quoteMood }}"
                             data-ag-text-font="{{ $textFont }}" data-ag-text-color="{{ $isCustomColor ? 'custom' : $textColor }}"
                             style="@if($cardImage) --ag-vibe-image: url('{{ $cardImage }}'); @endif
@@ -114,7 +115,7 @@
                             <span class="ag-vibe-tag">✦ {{ $quoteMoodLabel }} @if($cardImage) · Design {{ $cardStyle }} @endif</span>
                             <p class="ag-vibe-quote" title="{{ $quote->content }}">“{{ $quote->content }}”</p>
                             <p class="ag-vibe-byline">
-                                — {{ $quote->user->name }} <span>· {{ $quote->created_at->format('Y-m-d') }}</span>
+                                — @if($quote->user?->avatar_path)<img class="ag-v2-author-avatar" src="{{ route('users.avatar', $quote->user) }}" alt="">@endif {{ $quote->user?->name ?? 'Community member' }} <span>· {{ $quote->created_at->format('Y-m-d') }}</span>
                             </p>
                             @if ($isMine)
                                 <div class="ag-vibe-owner-controls">
@@ -128,6 +129,8 @@
                                 </div>
                             @endif
                         </blockquote>
+                        <x-social-actions :item="$quote" kind="quote" />
+                        </div>
                     @endif
                 </div>
             @empty

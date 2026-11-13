@@ -25,3 +25,14 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Local database accidentally included in older project exports; never publish it.
+/laravel
+/*.sqlite
+/*.sqlite3
+
+*.bak
+Install-Spotify*.ps1
+
+.env.*
+!.env.example
