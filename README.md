@@ -58,6 +58,28 @@ AFTERGLOW features two distinct visual experiences:
 
 ---
 
+
+## 📸 Project Screenshots
+
+### 🌌 Two Distinct Visual Worlds
+
+| Cyber Night | Icy Ethereal |
+|---|---|
+| ![Cyber Night](docs/screenshots/homepage.png) | ![Icy Ethereal](docs/screenshots/light-theme.png) |
+
+### 🎵 My Soundtrack
+
+![My Soundtrack](docs/screenshots/soundtrack.png)
+
+### 💻 Code Exchange
+
+![Code Exchange](docs/screenshots/code-exchange.png)
+
+---
+
+
+
+
 ## 🛠 Technology Stack
 
 | Category | Technologies |
