@@ -253,3 +253,28 @@ AFTERGLOW demonstrates practical full-stack development skills, including:
 ### 🌌 AFTERGLOW — Create. Share. Connect.
 
 *Developed as a full-stack web development project.*
+
+---
+
+## 📐 System Design & Documentation
+
+AFTERGLOW was developed with a structured software engineering approach, including requirements analysis, database design, implementation, and testing.
+
+### Entity Relationship Diagram (ERD)
+
+![AFTERGLOW ERD](docs/ERD_DIAGRAM.png)
+
+[View Complete ERD (PDF)](docs/AFTERGLOW_v2_ERD.pdf)
+
+### Use Case Diagram
+
+![AFTERGLOW Use Case Diagram](docs/USE_CASE_DIAGRAM.png)
+
+### Project Documentation
+
+- [Software Requirements](docs/AFTERGLOW_V2_REQUIREMENTS.md)
+- [SRS Addendum (PDF)](docs/AFTERGLOW_v2_SRS_Addendum.pdf)
+- [V3 Social Interactions](docs/AFTERGLOW_V3_INTERACTIONS.md)
+- [Deployment Checklist](docs/AFTERGLOW_V3_DEPLOY_CHECKLIST.md)
+
+---
